@@ -1,0 +1,7 @@
+C:\Users\polcf\Desktop\FP\S2AR\Sistemes programables\EEB0-M06U01I07\EEB0-M06U01I07-Con. AC3\Com. AC3\bin\Debug\Com.AC3.exe
+C:\Users\polcf\Desktop\FP\S2AR\Sistemes programables\EEB0-M06U01I07\EEB0-M06U01I07-Con. AC3\Com. AC3\bin\Debug\Com.AC3.pdb
+C:\Users\polcf\Desktop\FP\S2AR\Sistemes programables\EEB0-M06U01I07\EEB0-M06U01I07-Con. AC3\Com. AC3\obj\x86\Debug\Com.AC3.Form1.resources
+C:\Users\polcf\Desktop\FP\S2AR\Sistemes programables\EEB0-M06U01I07\EEB0-M06U01I07-Con. AC3\Com. AC3\obj\x86\Debug\Com.AC3.Properties.Resources.resources
+C:\Users\polcf\Desktop\FP\S2AR\Sistemes programables\EEB0-M06U01I07\EEB0-M06U01I07-Con. AC3\Com. AC3\obj\x86\Debug\Com. AC3.csproj.GenerateResource.Cache
+C:\Users\polcf\Desktop\FP\S2AR\Sistemes programables\EEB0-M06U01I07\EEB0-M06U01I07-Con. AC3\Com. AC3\obj\x86\Debug\Com.AC3.exe
+C:\Users\polcf\Desktop\FP\S2AR\Sistemes programables\EEB0-M06U01I07\EEB0-M06U01I07-Con. AC3\Com. AC3\obj\x86\Debug\Com.AC3.pdb
