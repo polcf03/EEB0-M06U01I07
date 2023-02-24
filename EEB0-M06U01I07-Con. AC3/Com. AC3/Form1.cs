@@ -18,6 +18,7 @@ namespace Com.AC3
         {
             InitializeComponent();
             sPort = new SerialPort();
+            
         }
 
 
@@ -45,15 +46,14 @@ namespace Com.AC3
         private void txtVelocity_TextChanged(object sender, EventArgs e)
         {
             trbVelocity.Value = Int32.Parse(txtVelocity.Text);
+            prbFeedback.Value=trbVelocity.Value;
+            lblFeedback.Text = trbVelocity.Value.ToString()+" %" ;
         }
         private void trbVelocity_ValueChanged(object sender, EventArgs e)
         {
            txtVelocity.Text= trbVelocity.Value.ToString();
         }
 
-        private void textBox1_TextChanged_1(object sender, EventArgs e)
-        {
-            
-        }
+        
     }
 }

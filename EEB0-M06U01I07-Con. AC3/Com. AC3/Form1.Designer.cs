@@ -36,21 +36,24 @@
             this.txtVelocity = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.prbFeedback = new System.Windows.Forms.ProgressBar();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblFeedback = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trbVelocity)).BeginInit();
             this.SuspendLayout();
             // 
             // btRight
             // 
-            this.btRight.Location = new System.Drawing.Point(107, 93);
+            this.btRight.Location = new System.Drawing.Point(12, 93);
             this.btRight.Name = "btRight";
-            this.btRight.Size = new System.Drawing.Size(69, 75);
+            this.btRight.Size = new System.Drawing.Size(75, 75);
             this.btRight.TabIndex = 0;
             this.btRight.UseVisualStyleBackColor = true;
             this.btRight.Click += new System.EventHandler(this.btRight_Click);
             // 
             // btOLeft
             // 
-            this.btOLeft.Location = new System.Drawing.Point(12, 93);
+            this.btOLeft.Location = new System.Drawing.Point(101, 93);
             this.btOLeft.Name = "btOLeft";
             this.btOLeft.Size = new System.Drawing.Size(75, 75);
             this.btOLeft.TabIndex = 1;
@@ -80,7 +83,7 @@
             // 
             this.btConDis.Location = new System.Drawing.Point(12, 411);
             this.btConDis.Name = "btConDis";
-            this.btConDis.Size = new System.Drawing.Size(156, 75);
+            this.btConDis.Size = new System.Drawing.Size(164, 75);
             this.btConDis.TabIndex = 5;
             this.btConDis.UseVisualStyleBackColor = true;
             this.btConDis.Click += new System.EventHandler(this.btConDis_Click);
@@ -97,11 +100,13 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Location = new System.Drawing.Point(63, 171);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(57, 17);
+            this.label1.Size = new System.Drawing.Size(61, 17);
             this.label1.TabIndex = 7;
-            this.label1.Text = "Velocity";
+            this.label1.Text = "Velocity:";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label2
             // 
@@ -113,12 +118,42 @@
             this.label2.TabIndex = 8;
             this.label2.Text = "%";
             // 
+            // prbFeedback
+            // 
+            this.prbFeedback.Location = new System.Drawing.Point(12, 288);
+            this.prbFeedback.Name = "prbFeedback";
+            this.prbFeedback.Size = new System.Drawing.Size(164, 23);
+            this.prbFeedback.TabIndex = 9;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(54, 268);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(74, 17);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Feedback:";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblFeedback
+            // 
+            this.lblFeedback.AutoSize = true;
+            this.lblFeedback.BackColor = System.Drawing.Color.Transparent;
+            this.lblFeedback.Location = new System.Drawing.Point(134, 268);
+            this.lblFeedback.Name = "lblFeedback";
+            this.lblFeedback.Size = new System.Drawing.Size(40, 17);
+            this.lblFeedback.TabIndex = 8;
+            this.lblFeedback.Text = "10 %";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(628, 498);
+            this.Controls.Add(this.prbFeedback);
+            this.Controls.Add(this.lblFeedback);
             this.Controls.Add(this.label2);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtVelocity);
             this.Controls.Add(this.btConDis);
@@ -144,6 +179,9 @@
         private System.Windows.Forms.TextBox txtVelocity;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ProgressBar prbFeedback;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblFeedback;
     }
 }
 
