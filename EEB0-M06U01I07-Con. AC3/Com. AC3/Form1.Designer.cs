@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btRight = new System.Windows.Forms.Button();
             this.btOLeft = new System.Windows.Forms.Button();
             this.btStrStp = new System.Windows.Forms.Button();
@@ -39,6 +40,8 @@
             this.prbFeedback = new System.Windows.Forms.ProgressBar();
             this.label3 = new System.Windows.Forms.Label();
             this.lblFeedback = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.trbVelocity)).BeginInit();
             this.SuspendLayout();
             // 
@@ -145,11 +148,20 @@
             this.lblFeedback.TabIndex = 8;
             this.lblFeedback.Text = "10 %";
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(245, 12);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(304, 286);
+            this.textBox1.TabIndex = 10;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(628, 498);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.prbFeedback);
             this.Controls.Add(this.lblFeedback);
             this.Controls.Add(this.label2);
@@ -182,6 +194,8 @@
         private System.Windows.Forms.ProgressBar prbFeedback;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblFeedback;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
