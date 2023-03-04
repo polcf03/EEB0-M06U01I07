@@ -7,13 +7,13 @@ namespace Com.AC3
 {
     class ComManager
     {
-        
+        static DataMotor myDataMotor = new DataMotor();
         public ComManager()
         {
             
         }
 
-        private string [] ReadData(string str)
+        private string [] ReadOrders(string str)
         {
             string [] S = {"", "", "", ""} ;
             char [] c = str.ToCharArray();
@@ -78,16 +78,21 @@ namespace Com.AC3
                     switch(str[1])
                     {
                         case "ON":
-                            if(str[2] == "OK") Data = Motor encendido;
+                            if(str[2] == "OK") Data = "Motor encendido";
                     }
                     break;
-
-
             }
             return Data;
         }
-        public void setData (string data)
+        public void setDataMotor (string Direction, bool On, int Velocity)
         {
-            
+            myDataMotor.Direction = Direction;
+            myDataMotor.On = On;
+            myDataMotor.Velocity = Velocity;
         }
+        string str;
+        public string getDirectionMotor() { return myDataMotor.Direction; }
+        public string geOnMotor() { return myDataMotor.On; }
+        public string geVelocityMotor() { return myDataMotor.Velocity; }
     }
+}

@@ -66,6 +66,10 @@ namespace Com.AC3
                 {
                     str = "#STM$DIS&%#";
                 }
+                catch(Exception)
+                {
+                    mySerial.Close();
+                }
             }
         }
 
@@ -96,11 +100,11 @@ namespace Com.AC3
         {
             string txtRecived;
             
-            txtRecived = mySerial.ReadLine();
+           
             if (mySerial.IsOpen)
             {
-                  
+                   txtRecived = mySerial.ReadLine();
             }   
-
+        }
     }
 }
