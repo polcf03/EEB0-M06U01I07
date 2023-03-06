@@ -7,15 +7,16 @@ namespace Com.AC3
 {
     class ComManager
     {
-        static DataMotor myDataMotor = new DataMotor();
+        static DataMotor myMotor = new Motor();
+        private string [] Data;
         public ComManager()
         {
-            
+            Data = new string[] {"", "", "", ""};
         }
 
-        private string [] ReadOrders(string str)
+        private string [] ReadData(string str)
         {
-            string [] S = {"", "", "", ""} ;
+
             char [] c = str.ToCharArray();
             string a = "";
             int i = 0;
@@ -26,71 +27,48 @@ namespace Com.AC3
             }
             while (c[i] != '#');
             a = "";
+            i++;
             while (c[i] != '$')
             {
                 a += c[i];
                 i++;
             }
-            S[0] = a;
+            Data[0] = a;
             a = "";
+            i++;
             while (c[i] != '&')
             {
                 a += c[i];
                 i++;
             }
-            S[1] = a;
+            Data[1] = a;
             a = "";
+            i++;
             while (c[i] != '%')
             {
                 a += c[i];
                 i++;
             }
-            S[2] = a;
+            Data[2] = a;
             a = "";
+            i++;
             while (c[i] != '#')
             {
                 a += c[i];
                 i++;
             }
-            S[3] = a;
+            Data[3] = a;
             a = "";
+            i++;
             return S;
-
         }
-        public string Data (string [] str) 
-        {
-            string Data = "";
-            switch(str[0])
-            {
-                case "STM":
-                    switch (str[1])
-                    {
-                        case "CONO":
-                            Data = "ArdConnected";
-                            break;
-                        case "DISO":
-                            Data = "ArdDisonnected";
-                            break;
-                    }
-                    break;
 
-                case "MOV":
-                    switch(str[1])
-                    {
-                        case "ON":
-                            if(str[2] == "OK") Data = "Motor encendido";
-                    }
-                    break;
-            }
-            return Data;
-        }
         public void setDataMotor (string Direction, bool On, int Velocity)
         {
             myDataMotor.Direction = Direction;
             myDataMotor.On = On;
             myDataMotor.Velocity = Velocity;
         }
-        string str;
         public string getDirectionMotor() { return myDataMotor.Direction; }
         public string geOnMotor() { return myDataMotor.On; }
         public string geVelocityMotor() { return myDataMotor.Velocity; }
