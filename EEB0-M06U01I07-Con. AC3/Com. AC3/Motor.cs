@@ -11,7 +11,9 @@ namespace Com.AC3
         private bool On;
         private int Velocity;
 
-        public DataMotor()
+        public Motor()
+
+        
         {
             Direction = "";
             On = false;

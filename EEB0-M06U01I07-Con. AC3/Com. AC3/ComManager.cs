@@ -7,7 +7,7 @@ namespace Com.AC3
 {
     class ComManager
     {
-        static DataMotor myMotor = new Motor();
+        static Motor myMotor = new Motor();
         private string [] Data;
         public ComManager()
         {
