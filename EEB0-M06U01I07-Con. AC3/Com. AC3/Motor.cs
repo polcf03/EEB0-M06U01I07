@@ -5,13 +5,11 @@ using System.Text;
 
 namespace Com.AC3
 {
-    class DataMotor
+    class Motor
     {
-        static DataMotor myData = new DataMotor();
         private string Direction;
         private bool On;
         private int Velocity;
-
 
         public DataMotor()
         {
