@@ -8,12 +8,14 @@ namespace Com.AC3
     class ComManager
     {
         static Motor myMotor = new Motor();
+        static Motor myOrdersArd = new OrdersArd();
         private string [] Data;
         public ComManager()
         {
             Data = new string[] {"", "", "", ""};
         }
 
+        // Read Serial data
         private string [] ReadData(string str)
         {
 
@@ -63,14 +65,23 @@ namespace Com.AC3
             return S;
         }
 
-        public void setDataMotor (string Direction, bool On, int Velocity)
+        // Arduino Orders
+
+        public void Actual_Data()
+        {
+            
+        }
+        
+        // Motor data acces
+
+        private void setDataMotor (string Direction, bool On, int Velocity)
         {
             myDataMotor.Direction = Direction;
             myDataMotor.On = On;
             myDataMotor.Velocity = Velocity;
         }
-        public string getDirectionMotor() { return myDataMotor.Direction; }
-        public string geOnMotor() { return myDataMotor.On; }
-        public string geVelocityMotor() { return myDataMotor.Velocity; }
+        private string getDirectionMotor() { return myDataMotor.Direction; }
+        private string geOnMotor() { return myDataMotor.On; }
+        private string geVelocityMotor() { return myDataMotor.Velocity; }
     }
 }

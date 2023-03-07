@@ -12,8 +12,7 @@ namespace Com.AC3
         private int Velocity;
 
         public Motor()
-
-        
+     
         {
             Direction = "";
             On = false;
