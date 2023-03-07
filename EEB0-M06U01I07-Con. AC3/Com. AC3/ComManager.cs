@@ -10,13 +10,14 @@ namespace Com.AC3
         static Motor myMotor = new Motor();
         static Motor myOrdersArd = new OrdersArd();
         private string [] Data;
+
         public ComManager()
         {
             Data = new string[] {"", "", "", ""};
         }
 
         // Read Serial data
-        private string [] ReadData(string str)
+        private string [] SaveData(string str)
         {
 
             char [] c = str.ToCharArray();
@@ -66,14 +67,12 @@ namespace Com.AC3
         }
 
         // Arduino Orders
-
-        public void Actual_Data()
+        public void ReadData()
         {
             
         }
         
         // Motor data acces
-
         private void setDataMotor (string Direction, bool On, int Velocity)
         {
             myDataMotor.Direction = Direction;
