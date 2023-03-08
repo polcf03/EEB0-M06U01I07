@@ -99,12 +99,40 @@ namespace Com.AC3
         public void mySerial_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             string txtRecived;
-            
-           
             if (mySerial.IsOpen)
             {
-                   txtRecived = mySerial.ReadLine();
+                txtRecived = mySerial.ReadLine();
             }   
+        }
+
+        public void Feedback(string [] Fdb)
+        {
+            switch (Fdb[0])
+            {
+                default:
+
+                case "STM": 
+                    switch(Fdb[1])
+                    {
+                        case "CONO":
+                            
+                            break;
+
+                        case "DISO":
+                            
+                            break;
+                    }
+                    break;
+
+                case "CON":
+                    switch(Fdb[1])
+                    break;
+
+                case "INF":
+
+                    break;
+            }
         }
     }
 }
+3

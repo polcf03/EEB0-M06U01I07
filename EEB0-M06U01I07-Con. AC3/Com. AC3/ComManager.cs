@@ -17,9 +17,8 @@ namespace Com.AC3
         }
 
         // Read Serial data
-        private string [] SaveData(string str)
+        private void SaveData(string str)
         {
-
             char [] c = str.ToCharArray();
             string a = "";
             int i = 0;
@@ -63,13 +62,13 @@ namespace Com.AC3
             Data[3] = a;
             a = "";
             i++;
-            return S;
         }
 
         // Arduino Orders
-        public void ReadData()
-        {
-            
+        public string [] ReadData(string str)
+        { 
+            SaveData(str)
+            return Data;
         }
         
         // Motor data acces
