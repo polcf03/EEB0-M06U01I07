@@ -15,3 +15,8 @@ C:\S2AR\M6.  Sistemes programables avançats\UF1. Sistemes avançats de control 
 C:\S2AR\M6.  Sistemes programables avançats\UF1. Sistemes avançats de control industrial\Practica\EEB0-M06U01I07\EEB0-M06U01I07\EEB0-M06U01I07-Con. AC3\Com. AC3\obj\x86\Debug\Com. AC3.csprojResolveAssemblyReference.cache
 P:\Fp\S2AR\Sistemes programables\EEB0-M06U01I07\EEB0-M06U01I07-Con. AC3\Com. AC3\obj\x86\Debug\Com.AC3.exe
 P:\Fp\S2AR\Sistemes programables\EEB0-M06U01I07\EEB0-M06U01I07-Con. AC3\Com. AC3\obj\x86\Debug\Com.AC3.pdb
+P:\Fp\S2AR\Sistemes programables\EEB0-M06U01I07\EEB0-M06U01I07-Con. AC3\Com. AC3\obj\x86\Debug\Com. AC3.csproj.AssemblyReference.cache
+P:\Fp\S2AR\Sistemes programables\EEB0-M06U01I07\EEB0-M06U01I07-Con. AC3\Com. AC3\obj\x86\Debug\Com.AC3.Form1.resources
+P:\Fp\S2AR\Sistemes programables\EEB0-M06U01I07\EEB0-M06U01I07-Con. AC3\Com. AC3\obj\x86\Debug\Com.AC3.Properties.Resources.resources
+P:\Fp\S2AR\Sistemes programables\EEB0-M06U01I07\EEB0-M06U01I07-Con. AC3\Com. AC3\obj\x86\Debug\Com. AC3.csproj.GenerateResource.cache
+P:\Fp\S2AR\Sistemes programables\EEB0-M06U01I07\EEB0-M06U01I07-Con. AC3\Com. AC3\obj\x86\Debug\Com. AC3.csproj.CoreCompileInputs.cache

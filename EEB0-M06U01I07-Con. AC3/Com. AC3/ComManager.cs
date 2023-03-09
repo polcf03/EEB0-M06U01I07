@@ -1,22 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Com.AC3
 {
     class ComManager
     {
         static Motor myMotor = new Motor();
-        static Motor myOrdersArd = new OrdersArd();
+        static OrdersToSend myOrders = new OrdersToSend();
         private string [] Data;
-
+        private bool ConexionState;
+        private bool ComError;
         public ComManager()
         {
             Data = new string[] {"", "", "", ""};
+            ConexionState = false;
+            ComError = false;
         }
 
-        // Read Serial data
+        // Save Serial data
         private void SaveData(string str)
         {
             char [] c = str.ToCharArray();
@@ -64,22 +69,139 @@ namespace Com.AC3
             i++;
         }
 
-        // Arduino Orders
-        public string [] ReadData(string str)
-        { 
-            SaveData(str)
-            return Data;
+        // Read and Save Feedback
+        private  void UploadFeedback(string[] Fdb)
+        {
+            switch (Fdb[0])
+            {
+                default:
+                    ComError = true;
+                    break;
+                case "STM":
+                    if (Fdb[1] == "CONO")
+                    {
+                        ConexionState = true;
+                        ComError = false;
+                    }
+                    else if (Fdb[1] == "DISO")
+                    {
+                        ConexionState = false;
+                        setDataMotor();
+                    }
+                    else
+                    {
+                        ComError = true;
+                        setDataMotor();
+                    }
+                    break;
+
+                case "CON":
+                    if (Fdb[1] == "MOV")
+                    {
+                        if (Fdb[2] == "ON")
+                        {
+                            if (Fdb[3] == "OK")
+                            {
+                                setDataMotor("Right", true, 20);
+                            }
+                            else if (Fdb[3] == "WR")
+                            {
+                                setDataMotor();
+                                ComError = true;
+                            }
+                            else
+                            {
+                                ComError = true;
+                            }
+                        }
+                        else if (Fdb[2] == "OFF")
+                        {
+                            if (Fdb[3] == "OK")
+                            {
+                                setDataMotor();
+                            }
+                            else if (Fdb[3] == "WR")
+                            {
+                                ComError = true;
+                            }
+                            else
+                            {
+                                ComError = true;
+                            }
+                        }
+                        else
+                        {
+                            ComError = true;
+                        }
+                    }
+                    else if (Fdb[1] == "DIR")
+                    {
+                        if (Fdb[2] == "OK")
+                        {
+
+                        }
+                        else if (Fdb[2] == "WR")
+                        {
+                            ComError = true;
+                        }
+                        else
+                        {
+                            ComError = true;
+                        }
+                    }
+                    else
+                    {
+                        ComError = true;
+                    }
+                    break;
+
+                case "INF":
+                    bool i = false;
+                    if (Fdb[1] == "ON")
+                    {
+                        i = true;
+                        setDataMotor(Fdb[2], i, Int32.Parse(Fdb[3]));
+                    }
+                    else if (Fdb[1]=="OFF")
+                    {
+                        i = false;
+                        setDataMotor(Fdb[2], i, Int32.Parse(Fdb[3]));
+                    }
+                    else
+                    {
+                        ComError = false;
+                    }
+                    break;
+            }
         }
-        
+
+        // Read and Upload Feedback
+        public void ReadFeedback(string str)
+        {
+            SaveData(str);
+            UploadFeedback(Data);
+        }
+
+        // Conexion Satate acces
+        public bool getConexionState() { return ConexionState; }
+        public bool getComError() { return ComError; }
+
         // Motor data acces
+        private void setDataMotor()
+        {
+            myMotor.Direction = "";
+            myMotor.On = false;
+            myMotor.Velocity = 0;
+        }
         private void setDataMotor (string Direction, bool On, int Velocity)
         {
-            myDataMotor.Direction = Direction;
-            myDataMotor.On = On;
-            myDataMotor.Velocity = Velocity;
+            myMotor.Direction = Direction;
+            myMotor.On = On;
+            myMotor.Velocity = Velocity;
         }
-        private string getDirectionMotor() { return myDataMotor.Direction; }
-        private string geOnMotor() { return myDataMotor.On; }
-        private string geVelocityMotor() { return myDataMotor.Velocity; }
+
+        public string getDirectionMotor() { return myMotor.Direction; }
+        public bool geOnMotor() { return myMotor.On; }
+        public int geVelocityMotor() { return myMotor.Velocity; }
     }
 }

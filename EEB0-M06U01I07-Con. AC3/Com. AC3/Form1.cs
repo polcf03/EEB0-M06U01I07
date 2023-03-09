@@ -15,27 +15,76 @@ namespace Com.AC3
     {
         static SerialPort mySerial = new SerialPort();
         static ComManager myComManager = new ComManager();
-        
 
-        bool firstCom, connect;
+        bool firstCom;
+        bool ConexionState;
+        string Port;
+
         public Form1()
         {
             InitializeComponent();
-            
             firstCom = true;
-            
+            ConexionState = false;
+            Port = "";
         }
+
         private void btConDis_Click(object sender, EventArgs e)
         {
             string str;
-            if(firstCom)
+            if (!ConexionState)
             {
-                foreach (string sp in SerialPort.GetPortNames())
+                if (firstCom)
                 {
-                    textBox1.Text = "trying to:" + mySerial + "\r\n" + textBox1.Text;
+                    foreach (string sp in SerialPort.GetPortNames())
+                    {
+                        textBox1.Text = "trying to:" + mySerial + "\r\n" + textBox1.Text;
+                        try
+                        {
+                            Port = sp;
+                            mySerial.PortName = Port;
+                            mySerial.BaudRate = 19200;
+                            mySerial.Encoding = System.Text.Encoding.Default;
+                            mySerial.ReadTimeout = 2000;
+                            mySerial.WriteTimeout = 2000;
+
+
+                            str = "#STM$CON&%#";
+                            textBox1.Text = str;
+
+                            mySerial.Open();
+                            mySerial.Write(str);
+
+                            str = mySerial.ReadLine();
+                            myComManager.ReadFeedback(str);
+
+                            if (!myComManager.getComError() && myComManager.getConexionState())
+                            {
+                                ConexionState = myComManager.getConexionState();
+                                btConDis.Text = "Disconnect";
+                                btConDis.BackColor = Color.Red;
+                            }
+                            else
+                            {
+                                mySerial.Close();
+                                ConexionState = myComManager.getConexionState();
+                                btConDis.Text = "Connect";
+                                btConDis.BackColor = Color.Green;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            mySerial.Close();
+                            ConexionState = myComManager.getConexionState();
+                            btConDis.Text = "Connect";
+                            btConDis.BackColor = Color.Green;
+                        }
+                    }
+                }
+                else
+                {
                     try
                     {
-                        mySerial.PortName = sp;
+                        mySerial.PortName = Port;
                         mySerial.BaudRate = 19200;
                         mySerial.Encoding = System.Text.Encoding.Default;
                         mySerial.ReadTimeout = 2000;
@@ -49,30 +98,36 @@ namespace Com.AC3
                         mySerial.Write(str);
 
                         str = mySerial.ReadLine();
-                        if(myComManager.ReadData(str)[0] == "STM" && myComManager.ReadData(str)[1] == "CONO")
+                        myComManager.ReadFeedback(str);
+
+                        if (!myComManager.getComError() && myComManager.getConexionState())
                         {
-                            connect = true;
+                            ConexionState = true;
+                            btConDis.Text = "Disconnect";
+                            btConDis.BackColor = Color.Red;
+                        }
+                        else
+                        {
+                            mySerial.Close();
+                            btConDis.Text = "Connect";
+                            btConDis.BackColor = Color.Green;
                         }
                     }
-                    catch(Exception)
+                    catch (Exception)
                     {
                         mySerial.Close();
+                        btConDis.Text = "Connect";
+                        btConDis.BackColor = Color.Green;
                     }
                 }
             }
             else
             {
-                try
-                {
-                    str = "#STM$DIS&%#";
-                }
-                catch(Exception)
-                {
-                    mySerial.Close();
-                }
+                mySerial.Close();
+                btConDis.Text = "Connect";
+                btConDis.BackColor = Color.Green;
             }
         }
-
         private void btOLeft_Click(object sender, EventArgs e)
         {
 
@@ -96,43 +151,15 @@ namespace Com.AC3
            txtVelocity.Text= trbVelocity.Value.ToString();
         }
 
-        public void mySerial_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        private void mySerial_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             string txtRecived;
             if (mySerial.IsOpen)
             {
                 txtRecived = mySerial.ReadLine();
+                myComManager.ReadFeedback(txtRecived);
+
             }   
-        }
-
-        public void Feedback(string [] Fdb)
-        {
-            switch (Fdb[0])
-            {
-                default:
-
-                case "STM": 
-                    switch(Fdb[1])
-                    {
-                        case "CONO":
-                            
-                            break;
-
-                        case "DISO":
-                            
-                            break;
-                    }
-                    break;
-
-                case "CON":
-                    switch(Fdb[1])
-                    break;
-
-                case "INF":
-
-                    break;
-            }
         }
     }
 }
-3
