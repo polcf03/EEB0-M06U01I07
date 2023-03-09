@@ -10,7 +10,8 @@ namespace Com.AC3
     class ComManager
     {
         static Motor myMotor = new Motor();
-        
+        static OrdersToSend myOrders = new OrdersToSend();
+
         private string [] Data;
         private bool ConexionState;
         private bool ComError;
@@ -190,17 +191,9 @@ namespace Com.AC3
 
 
         // Create New Order
-        public void OrderSTM()
+        public void OrderSTM(bool connect)
         {
-            OrdersToSend myOrders = new OrdersToSend("STM",);
-        }
-        public void OrderCON()
-        {
-            OrdersToSend myOrders = new OrdersToSend();
-        }
-        public void OrderINF()
-        {
-            OrdersToSend myOrders = new OrdersToSend();
+            
         }
 
         // Motor data acces
@@ -210,7 +203,8 @@ namespace Com.AC3
             myMotor.On = false;
             myMotor.Velocity = 0;
         }
-        private void setDataMotor (string Direction, bool On, int Velocity)
+
+        void setDataMotor (string Direction, bool On, int Velocity)
         {
             myMotor.Direction = Direction;
             myMotor.On = On;

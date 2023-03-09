@@ -14,13 +14,7 @@ namespace Com.AC3
         {
             order = "";
         }
-        public OrdersToSend()
-        {
 
-        }
-
-
-
-        public string Order() { return order; }
+        public string Order { get { return order; } set { order = value; } }
     }
 }

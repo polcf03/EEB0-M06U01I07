@@ -47,8 +47,8 @@ namespace Com.AC3
                             mySerial.ReadTimeout = 2000;
                             mySerial.WriteTimeout = 2000;
 
-
-                            str = "#STM$CON&%#";
+                            OrderSTM(true)
+                            str = "";
                             textBox1.Text = str;
 
                             mySerial.Open();
