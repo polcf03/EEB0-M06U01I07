@@ -10,10 +10,11 @@ namespace Com.AC3
     class ComManager
     {
         static Motor myMotor = new Motor();
-        static OrdersToSend myOrders = new OrdersToSend();
+        
         private string [] Data;
         private bool ConexionState;
         private bool ComError;
+
         public ComManager()
         {
             Data = new string[] {"", "", "", ""};
@@ -91,6 +92,7 @@ namespace Com.AC3
                     else
                     {
                         ComError = true;
+                        ConexionState = false;
                         setDataMotor();
                     }
                     break;
@@ -185,6 +187,21 @@ namespace Com.AC3
         // Conexion Satate acces
         public bool getConexionState() { return ConexionState; }
         public bool getComError() { return ComError; }
+
+
+        // Create New Order
+        public void OrderSTM()
+        {
+            OrdersToSend myOrders = new OrdersToSend("STM",);
+        }
+        public void OrderCON()
+        {
+            OrdersToSend myOrders = new OrdersToSend();
+        }
+        public void OrderINF()
+        {
+            OrdersToSend myOrders = new OrdersToSend();
+        }
 
         // Motor data acces
         private void setDataMotor()

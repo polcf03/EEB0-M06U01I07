@@ -52,7 +52,7 @@ namespace Com.AC3
                             textBox1.Text = str;
 
                             mySerial.Open();
-                            mySerial.Write(str);
+                            mySerial.Write(myComManager.OrderSTM());
 
                             str = mySerial.ReadLine();
                             myComManager.ReadFeedback(str);

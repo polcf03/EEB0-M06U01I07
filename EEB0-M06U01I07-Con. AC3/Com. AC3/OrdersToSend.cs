@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,12 +12,15 @@ namespace Com.AC3
 
         public OrdersToSend()
         {
-            order =  "";
+            order = "";
+        }
+        public OrdersToSend()
+        {
+
         }
 
 
 
-
-        public string Order { get { return order; } set { order = value; } }
+        public string Order() { return order; }
     }
 }
