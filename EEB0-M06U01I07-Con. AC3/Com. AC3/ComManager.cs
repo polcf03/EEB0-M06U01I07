@@ -6,21 +6,24 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO.Ports;
 using System.Threading;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Drawing;
 
 namespace Com.AC3
 {
     class ComManager
     {
+        // Objects
         static SerialPort mySerial = new SerialPort();
         static Motor myMotor = new Motor();
-        static OrdersToSend myOrders = new OrdersToSend();
+        static OrdersToSend myOrder;
 
+        // Conexion Data Propieties 
         private string [] Data;
         private bool ConexionState, ComError, firstCom;
         private string Port;
 
+        // Constructors
         public ComManager()
         {
             Data = new string[] {"", "", "", ""};
@@ -30,7 +33,90 @@ namespace Com.AC3
             Port = "";
         }
 
+        //Conexion
+        public void Conexion()
+        {
+            string str;
+            if (!ConexionState)
+            {
+                if (firstCom)
+                {
+                    foreach (string sp in SerialPort.GetPortNames())
+                    {
+                        try
+                        {
+                            //Serial Pârameters
+                            Port = sp;
+                            mySerial.PortName = Port;
+                            mySerial.BaudRate = 19200;
+                            mySerial.Encoding = System.Text.Encoding.Default;
+                            mySerial.ReadTimeout = 2000;
+                            mySerial.WriteTimeout = 2000;
+
+                            //Serial Conexion
+                            mySerial.Open();
+                            myOrder = new OrdersToSend(true);
+                          
+                            //Orders and feedback conexion
+                            SendOrder();
+                            ReadFeedback();
+
+                            if (getComError())
+                            {
+                                mySerial.Close();
+                            }
+                            firstCom = false;
+                        }
+                        catch (Exception)
+                        {
+                            mySerial.Close();
+                        }
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        //Serial Pârameters
+                        mySerial.PortName = Port;
+                        mySerial.BaudRate = 19200;
+                        mySerial.Encoding = System.Text.Encoding.Default;
+                        mySerial.ReadTimeout = 2000;
+                        mySerial.WriteTimeout = 2000;
+
+
+                        //Serial Conexion
+                        OrderSTM(true);
+                        mySerial.Open();
+                        mySerial.Write(Order());
+
+                        //Orders and feedback conexion
+                        str = mySerial.ReadLine();
+                        ReadFeedback();
+
+                        if (getComError())
+                        {
+                            mySerial.Close();
+                        }
+                        firstCom = false;
+                    }
+                    catch (Exception)
+                    {
+                        mySerial.Close();
+                    }
+                }
+            }
+            else
+            {
+                OrderSTM(false);
+                SendOrder();
+                mySerial.Close();
+            }
+        }
+
+
         // Save Serial data
+        // Read and Save Feedback
         private void SaveData(string str)
         {
             char [] c = str.ToCharArray();
@@ -77,8 +163,6 @@ namespace Com.AC3
             a = "";
             i++;
         }
-
-        // Read and Save Feedback
         private  void UploadFeedback(string[] Fdb)
         {
             switch (Fdb[0])
@@ -90,7 +174,6 @@ namespace Com.AC3
                     if (Fdb[1] == "CONO")
                     {
                         ConexionState = true;
-                        ComError = false;
                     }
                     else if (Fdb[1] == "DISO")
                     {
@@ -186,8 +269,9 @@ namespace Com.AC3
         }
 
         // Read and Upload Feedback
-        private void ReadFeedback(string str)
+        public void ReadFeedback()
         {
+            string str = mySerial.ReadLine();
             SaveData(str);
             UploadFeedback(Data);
         }
@@ -216,6 +300,13 @@ namespace Com.AC3
             return myOrders.Order();
         }
 
+        // Send Order
+        public void SendOrder()
+        {
+            string str = Order();
+            mySerial.Write(str);
+        }
+
 
         // Motor data acces and modifier
         private void setDataMotor()
@@ -232,110 +323,7 @@ namespace Com.AC3
         }
 
         public bool getDirectionMotor() { return myMotor.Direction; }
-        public bool geOnMotor() { return myMotor.On; }
-        public int geVelocityMotor() { return myMotor.Velocity; }
-
-
-        //Conexion
-        public void Conexion()
-        {
-            string str;
-            if (!ConexionState)
-            {
-                if (firstCom)
-                {
-                    foreach (string sp in SerialPort.GetPortNames())
-                    {
-                        try
-                        {
-                            //Serial Pârameters
-                            Port = sp;
-                            mySerial.PortName = Port;
-                            mySerial.BaudRate = 19200;
-                            mySerial.Encoding = System.Text.Encoding.Default;
-                            mySerial.ReadTimeout = 2000;
-                            mySerial.WriteTimeout = 2000;
-
-                            //Serial Conexion
-                            OrderSTM(true);
-                            mySerial.Open();
-                            mySerial.Write(Order());
-
-                            //Orders and feedback conexion
-                            str = mySerial.ReadLine();
-                            ReadFeedback(str);
-
-                            if (getComError() && !getConexionState())
-                            {
-                                mySerial.Close();
-                            }
-                            else if (getComError() && getConexionState())
-                            {
-                                mySerial.Close();
-                            }
-                            firstCom = false;
-                        }
-                        catch (Exception)
-                        {
-                            mySerial.Close();
-                        }
-                    }
-                }
-                else
-                {
-                    try
-                    {
-                        //Serial Pârameters
-                        mySerial.PortName = Port;
-                        mySerial.BaudRate = 19200;
-                        mySerial.Encoding = System.Text.Encoding.Default;
-                        mySerial.ReadTimeout = 2000;
-                        mySerial.WriteTimeout = 2000;
-
-
-                        //Serial Conexion
-                        OrderSTM(true);
-                        mySerial.Open();
-                        mySerial.Write(Order());
-
-                        //Orders and feedback conexion
-                        str = mySerial.ReadLine();
-                        ReadFeedback(str);
-
-                        if (getComError() && !getConexionState())
-                        {
-                            mySerial.Close();
-                        }
-                        else if (getComError() && getConexionState())
-                        {
-                            mySerial.Close();
-                        }
-                        firstCom = false;
-                    }
-                    catch (Exception)
-                    {
-                        mySerial.Close();
-                    }
-                }
-            }
-            else
-            {
-                OrderSTM(false);
-                mySerial.Write(Order());
-                mySerial.Close();
-            }
-        }
-
-        //Data Recieved
-        private void mySerial_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            string txtRecived;
-            if (mySerial.IsOpen)
-            {
-                txtRecived = mySerial.ReadLine();
-                ReadFeedback(txtRecived);
-            }
-        }
+        public bool getOnMotor() { return myMotor.On; }
+        public int getVelocityMotor() { return myMotor.Velocity; }
     }
-
 }

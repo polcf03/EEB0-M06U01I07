@@ -7,10 +7,12 @@ namespace Com.AC3
 {
     class Motor
     {
+        // Motor Propieties
         private bool direction;
         private bool on;
         private int velocity;
 
+        //Constructor
         public Motor()
         {
             direction = true;

@@ -9,13 +9,18 @@ namespace Com.AC3
 {
     class OrdersToSend
     {
+        // Orders propietis
         private string order;
 
+        // Constructor
         public OrdersToSend()
         {
             order = "";
         }
-
+        public OrdersToSend(bool Conexion)
+        {
+            order = "#STM$CON&%#";
+        }
 
         // Order Modifiers
         public void OrderSTM(bool connect)
