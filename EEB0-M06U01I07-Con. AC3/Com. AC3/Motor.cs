@@ -7,18 +7,19 @@ namespace Com.AC3
 {
     class Motor
     {
-        private string direction;
+        private bool direction;
         private bool on;
         private int velocity;
 
         public Motor()
         {
-            direction = "";
+            direction = true;
             on = false;
             velocity = 0;
         }
         
-        public string Direction { get { return direction; } set{ direction = value; } }
+        // Motor access and modifiers
+        public bool Direction { get { return direction; } set{ direction = value; } }
         public bool On { get { return on; } set { on = value; } }
         public int Velocity { get { return velocity; } set { velocity = value; } }
     }
