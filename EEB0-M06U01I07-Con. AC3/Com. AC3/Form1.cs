@@ -21,6 +21,10 @@ namespace Com.AC3
         {
             InitializeComponent();
             btConDis.Text = "Connect";
+            btRight.Enabled = false;
+            btLeft.Enabled = false;
+            btStrStp.Enabled = false;
+            btVel.Enabled = false;
         }
 
         // Conexion
@@ -103,7 +107,7 @@ namespace Com.AC3
         }
         private void btVel_Click(object sender, EventArgs e)
         {
-            myComManager.OrderCON(2, myComManager.getDirectionMotor(),trbVelocity.Value)
+            myComManager.OrderCON(2, myComManager.getDirectionMotor(), trbVelocity.Value);
             myComManager.SendOrder();
             myComManager.ReadFeedback();
             if(!myComManager.getComError())

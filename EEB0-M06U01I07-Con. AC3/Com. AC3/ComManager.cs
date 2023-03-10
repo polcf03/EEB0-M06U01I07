@@ -6,7 +6,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO.Ports;
 using System.Threading;
-using System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Drawing;
 
 namespace Com.AC3
@@ -16,7 +15,7 @@ namespace Com.AC3
         // Objects
         static SerialPort mySerial = new SerialPort();
         static Motor myMotor = new Motor();
-        static OrdersToSend myOrder;
+        static OrdersToSend myOrders = new OrdersToSend(true);
 
         // Conexion Data Propieties 
         private string [] Data;
@@ -55,7 +54,7 @@ namespace Com.AC3
 
                             //Serial Conexion
                             mySerial.Open();
-                            myOrder = new OrdersToSend(true);
+             
                           
                             //Orders and feedback conexion
                             SendOrder();
@@ -113,7 +112,6 @@ namespace Com.AC3
                 mySerial.Close();
             }
         }
-
 
         // Save Serial data
         // Read and Save Feedback
@@ -195,7 +193,7 @@ namespace Com.AC3
                         {
                             if (Fdb[3] == "OK")
                             {
-                                setDataMotor("Right", true, 20);
+                                setDataMotor(true, true, 20);
                             }
                             else if (Fdb[3] == "WR")
                             {
@@ -253,6 +251,7 @@ namespace Com.AC3
                     if (Fdb[1] == "ON")
                     {
                         i = true;
+                        if (Fdb[2] == R)
                         setDataMotor(Fdb[2], i, Int32.Parse(Fdb[3]));
                     }
                     else if (Fdb[1]=="OFF")
@@ -307,15 +306,14 @@ namespace Com.AC3
             mySerial.Write(str);
         }
 
-
         // Motor data acces and modifier
         private void setDataMotor()
         {
-            myMotor.Direction = "";
+            myMotor.Direction = true;
             myMotor.On = false;
             myMotor.Velocity = 0;
         }
-        private void setDataMotor (string Direction, bool On, int Velocity)
+        private void setDataMotor (bool Direction, bool On, int Velocity)
         {
             myMotor.Direction = Direction;
             myMotor.On = On;
