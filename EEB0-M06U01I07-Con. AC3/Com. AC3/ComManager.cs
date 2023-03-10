@@ -4,23 +4,30 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Windows.Forms;
+using System.IO.Ports;
+using System.Threading;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Drawing;
 
 namespace Com.AC3
 {
     class ComManager
     {
+        static SerialPort mySerial = new SerialPort();
         static Motor myMotor = new Motor();
         static OrdersToSend myOrders = new OrdersToSend();
 
         private string [] Data;
-        private bool ConexionState;
-        private bool ComError;
+        private bool ConexionState, ComError, firstCom;
+        private string Port;
 
         public ComManager()
         {
             Data = new string[] {"", "", "", ""};
             ConexionState = false;
             ComError = false;
+            firstCom = true;
+            Port = "";
         }
 
         // Save Serial data
@@ -179,7 +186,7 @@ namespace Com.AC3
         }
 
         // Read and Upload Feedback
-        public void ReadFeedback(string str)
+        private void ReadFeedback(string str)
         {
             SaveData(str);
             UploadFeedback(Data);
@@ -189,30 +196,146 @@ namespace Com.AC3
         public bool getConexionState() { return ConexionState; }
         public bool getComError() { return ComError; }
 
-
         // Create New Order
         public void OrderSTM(bool connect)
         {
-            
+            myOrders.OrderSTM(connect);
+        }
+        public void OrderCON(int Mode, bool dir, int vel)
+        {
+            myOrders.OrderCON(Mode, dir, vel);
+        }
+        public void OrderINF()
+        {
+            myOrders.OrderINF();
+        }
+        
+        // Read Order to send
+        private string Order()
+        {
+            return myOrders.Order();
         }
 
-        // Motor data acces
+
+        // Motor data acces and modifier
         private void setDataMotor()
         {
             myMotor.Direction = "";
             myMotor.On = false;
             myMotor.Velocity = 0;
         }
-
-        void setDataMotor (string Direction, bool On, int Velocity)
+        private void setDataMotor (string Direction, bool On, int Velocity)
         {
             myMotor.Direction = Direction;
             myMotor.On = On;
             myMotor.Velocity = Velocity;
         }
 
-        public string getDirectionMotor() { return myMotor.Direction; }
+        public bool getDirectionMotor() { return myMotor.Direction; }
         public bool geOnMotor() { return myMotor.On; }
         public int geVelocityMotor() { return myMotor.Velocity; }
+
+
+        //Conexion
+        public void Conexion()
+        {
+            string str;
+            if (!ConexionState)
+            {
+                if (firstCom)
+                {
+                    foreach (string sp in SerialPort.GetPortNames())
+                    {
+                        try
+                        {
+                            //Serial Pârameters
+                            Port = sp;
+                            mySerial.PortName = Port;
+                            mySerial.BaudRate = 19200;
+                            mySerial.Encoding = System.Text.Encoding.Default;
+                            mySerial.ReadTimeout = 2000;
+                            mySerial.WriteTimeout = 2000;
+
+                            //Serial Conexion
+                            OrderSTM(true);
+                            mySerial.Open();
+                            mySerial.Write(Order());
+
+                            //Orders and feedback conexion
+                            str = mySerial.ReadLine();
+                            ReadFeedback(str);
+
+                            if (getComError() && !getConexionState())
+                            {
+                                mySerial.Close();
+                            }
+                            else if (getComError() && getConexionState())
+                            {
+                                mySerial.Close();
+                            }
+                            firstCom = false;
+                        }
+                        catch (Exception)
+                        {
+                            mySerial.Close();
+                        }
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        //Serial Pârameters
+                        mySerial.PortName = Port;
+                        mySerial.BaudRate = 19200;
+                        mySerial.Encoding = System.Text.Encoding.Default;
+                        mySerial.ReadTimeout = 2000;
+                        mySerial.WriteTimeout = 2000;
+
+
+                        //Serial Conexion
+                        OrderSTM(true);
+                        mySerial.Open();
+                        mySerial.Write(Order());
+
+                        //Orders and feedback conexion
+                        str = mySerial.ReadLine();
+                        ReadFeedback(str);
+
+                        if (getComError() && !getConexionState())
+                        {
+                            mySerial.Close();
+                        }
+                        else if (getComError() && getConexionState())
+                        {
+                            mySerial.Close();
+                        }
+                        firstCom = false;
+                    }
+                    catch (Exception)
+                    {
+                        mySerial.Close();
+                    }
+                }
+            }
+            else
+            {
+                OrderSTM(false);
+                mySerial.Write(Order());
+                mySerial.Close();
+            }
+        }
+
+        //Data Recieved
+        private void mySerial_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            string txtRecived;
+            if (mySerial.IsOpen)
+            {
+                txtRecived = mySerial.ReadLine();
+                ReadFeedback(txtRecived);
+            }
+        }
     }
+
 }

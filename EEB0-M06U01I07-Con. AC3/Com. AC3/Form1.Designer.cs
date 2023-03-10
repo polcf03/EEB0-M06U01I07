@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.btRight = new System.Windows.Forms.Button();
-            this.btOLeft = new System.Windows.Forms.Button();
+            this.btLeft = new System.Windows.Forms.Button();
             this.btStrStp = new System.Windows.Forms.Button();
             this.trbVelocity = new System.Windows.Forms.TrackBar();
             this.btConDis = new System.Windows.Forms.Button();
@@ -47,28 +47,30 @@
             // 
             // btRight
             // 
-            this.btRight.Location = new System.Drawing.Point(9, 76);
-            this.btRight.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btRight.Location = new System.Drawing.Point(74, 76);
+            this.btRight.Margin = new System.Windows.Forms.Padding(2);
             this.btRight.Name = "btRight";
             this.btRight.Size = new System.Drawing.Size(56, 61);
             this.btRight.TabIndex = 0;
+            this.btRight.Text = "Right";
             this.btRight.UseVisualStyleBackColor = true;
             this.btRight.Click += new System.EventHandler(this.btRight_Click);
             // 
-            // btOLeft
+            // btLeft
             // 
-            this.btOLeft.Location = new System.Drawing.Point(76, 76);
-            this.btOLeft.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.btOLeft.Name = "btOLeft";
-            this.btOLeft.Size = new System.Drawing.Size(56, 61);
-            this.btOLeft.TabIndex = 1;
-            this.btOLeft.UseVisualStyleBackColor = true;
-            this.btOLeft.Click += new System.EventHandler(this.btOLeft_Click);
+            this.btLeft.Location = new System.Drawing.Point(11, 76);
+            this.btLeft.Margin = new System.Windows.Forms.Padding(2);
+            this.btLeft.Name = "btLeft";
+            this.btLeft.Size = new System.Drawing.Size(56, 61);
+            this.btLeft.TabIndex = 1;
+            this.btLeft.Text = "Left";
+            this.btLeft.UseVisualStyleBackColor = true;
+            this.btLeft.Click += new System.EventHandler(this.btLeft_Click);
             // 
             // btStrStp
             // 
             this.btStrStp.Location = new System.Drawing.Point(9, 10);
-            this.btStrStp.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btStrStp.Margin = new System.Windows.Forms.Padding(2);
             this.btStrStp.Name = "btStrStp";
             this.btStrStp.Size = new System.Drawing.Size(123, 61);
             this.btStrStp.TabIndex = 2;
@@ -78,7 +80,7 @@
             // trbVelocity
             // 
             this.trbVelocity.Location = new System.Drawing.Point(9, 178);
-            this.trbVelocity.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.trbVelocity.Margin = new System.Windows.Forms.Padding(2);
             this.trbVelocity.Maximum = 100;
             this.trbVelocity.Name = "trbVelocity";
             this.trbVelocity.Size = new System.Drawing.Size(123, 45);
@@ -89,17 +91,18 @@
             // btConDis
             // 
             this.btConDis.Location = new System.Drawing.Point(9, 334);
-            this.btConDis.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btConDis.Margin = new System.Windows.Forms.Padding(2);
             this.btConDis.Name = "btConDis";
             this.btConDis.Size = new System.Drawing.Size(123, 61);
             this.btConDis.TabIndex = 5;
+            this.btConDis.Text = "Connect";
             this.btConDis.UseVisualStyleBackColor = true;
             this.btConDis.Click += new System.EventHandler(this.btConDis_Click);
             // 
             // txtVelocity
             // 
             this.txtVelocity.Location = new System.Drawing.Point(9, 155);
-            this.txtVelocity.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtVelocity.Margin = new System.Windows.Forms.Padding(2);
             this.txtVelocity.Name = "txtVelocity";
             this.txtVelocity.Size = new System.Drawing.Size(124, 20);
             this.txtVelocity.TabIndex = 6;
@@ -132,7 +135,7 @@
             // prbFeedback
             // 
             this.prbFeedback.Location = new System.Drawing.Point(9, 234);
-            this.prbFeedback.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.prbFeedback.Margin = new System.Windows.Forms.Padding(2);
             this.prbFeedback.Name = "prbFeedback";
             this.prbFeedback.Size = new System.Drawing.Size(123, 19);
             this.prbFeedback.TabIndex = 9;
@@ -162,7 +165,7 @@
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(184, 10);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(229, 233);
@@ -183,9 +186,9 @@
             this.Controls.Add(this.btConDis);
             this.Controls.Add(this.trbVelocity);
             this.Controls.Add(this.btStrStp);
-            this.Controls.Add(this.btOLeft);
+            this.Controls.Add(this.btLeft);
             this.Controls.Add(this.btRight);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.trbVelocity)).EndInit();
@@ -197,7 +200,7 @@
         #endregion
 
         private System.Windows.Forms.Button btRight;
-        private System.Windows.Forms.Button btOLeft;
+        private System.Windows.Forms.Button btLeft;
         private System.Windows.Forms.Button btStrStp;
         private System.Windows.Forms.TrackBar trbVelocity;
         private System.Windows.Forms.Button btConDis;

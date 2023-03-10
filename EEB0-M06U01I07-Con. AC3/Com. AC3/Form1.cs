@@ -13,132 +13,79 @@ namespace Com.AC3
 {
     public partial class Form1 : Form
     {
-        static SerialPort mySerial = new SerialPort();
+        
         static ComManager myComManager = new ComManager();
-
-        bool firstCom;
-        bool ConexionState;
-        string Port;
 
         public Form1()
         {
             InitializeComponent();
-            firstCom = true;
-            ConexionState = false;
-            Port = "";
+            btConDis.Text = "Connect";
         }
 
         private void btConDis_Click(object sender, EventArgs e)
         {
-            string str;
-            if (!ConexionState)
+            myComManager.Conexion();
+            if (!myComManager.getComError() && myComManager.getConexionState())
             {
-                if (firstCom)
-                {
-                    foreach (string sp in SerialPort.GetPortNames())
-                    {
-                        textBox1.Text = "trying to:" + mySerial + "\r\n" + textBox1.Text;
-                        try
-                        {
-                            Port = sp;
-                            mySerial.PortName = Port;
-                            mySerial.BaudRate = 19200;
-                            mySerial.Encoding = System.Text.Encoding.Default;
-                            mySerial.ReadTimeout = 2000;
-                            mySerial.WriteTimeout = 2000;
-
-                            OrderSTM(true)
-                            str = "";
-                            textBox1.Text = str;
-
-                            mySerial.Open();
-                            mySerial.Write(myComManager.OrderSTM());
-
-                            str = mySerial.ReadLine();
-                            myComManager.ReadFeedback(str);
-
-                            if (!myComManager.getComError() && myComManager.getConexionState())
-                            {
-                                ConexionState = myComManager.getConexionState();
-                                btConDis.Text = "Disconnect";
-                                btConDis.BackColor = Color.Red;
-                            }
-                            else
-                            {
-                                mySerial.Close();
-                                ConexionState = myComManager.getConexionState();
-                                btConDis.Text = "Connect";
-                                btConDis.BackColor = Color.Green;
-                            }
-                        }
-                        catch (Exception)
-                        {
-                            mySerial.Close();
-                            ConexionState = myComManager.getConexionState();
-                            btConDis.Text = "Connect";
-                            btConDis.BackColor = Color.Green;
-                        }
-                    }
-                }
-                else
-                {
-                    try
-                    {
-                        mySerial.PortName = Port;
-                        mySerial.BaudRate = 19200;
-                        mySerial.Encoding = System.Text.Encoding.Default;
-                        mySerial.ReadTimeout = 2000;
-                        mySerial.WriteTimeout = 2000;
-
-
-                        str = "#STM$CON&%#";
-                        textBox1.Text = str;
-
-                        mySerial.Open();
-                        mySerial.Write(str);
-
-                        str = mySerial.ReadLine();
-                        myComManager.ReadFeedback(str);
-
-                        if (!myComManager.getComError() && myComManager.getConexionState())
-                        {
-                            ConexionState = true;
-                            btConDis.Text = "Disconnect";
-                            btConDis.BackColor = Color.Red;
-                        }
-                        else
-                        {
-                            mySerial.Close();
-                            btConDis.Text = "Connect";
-                            btConDis.BackColor = Color.Green;
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        mySerial.Close();
-                        btConDis.Text = "Connect";
-                        btConDis.BackColor = Color.Green;
-                    }
-                }
+                btConDis.Text = "Disconnect";
+                btConDis.BackColor = Color.Red;
+            }
+            else if (myComManager.getComError() && !myComManager.getConexionState())
+            {
+                btConDis.Text = "Disconnect";
+                btConDis.BackColor = Color.Red;
+            }
+            else if (!myComManager.getComError() && !myComManager.getConexionState())
+            {
+                btConDis.Text = "Connect";
+                btConDis.BackColor = Color.Green;
             }
             else
             {
-                mySerial.Close();
                 btConDis.Text = "Connect";
                 btConDis.BackColor = Color.Green;
             }
         }
-        private void btOLeft_Click(object sender, EventArgs e)
-        {
 
+        //Controls
+        private void btLeft_Click(object sender, EventArgs e)
+        {
+            myComManager.OrderCON(3, false, trbVelocity.Value);
+            if (!myComManager.getComError())
+            {
+                if (!myComManager.getDirectionMotor())
+                {
+                    btLeft.BackColor = Color.Gray;
+                    btRight.BackColor = Color.Coral;
+                    btLeft.Enabled = false;
+                    btRight.Enabled = true;
+                }
+            }     
         }
         private void btRight_Click(object sender, EventArgs e)
         {
-
+            myComManager.OrderCON(3, true, trbVelocity.Value);
+            if (!myComManager.getComError())
+            {
+                if (myComManager.getDirectionMotor())
+                {
+                    btRight.BackColor = Color.Gray;
+                    btLeft.BackColor = Color.Coral;
+                    btLeft.Enabled = true;
+                    btRight.Enabled = false;
+                }
+            }
         }
         private void btStrStp_Click(object sender, EventArgs e)
         {
+            myComManager.OrderCON(0, true, trbVelocity.Value);
+            if (!myComManager.getComError())
+            {
+                if (myComManager.geOnMotor())
+                {
 
+                }
+            }
         }
         private void txtVelocity_TextChanged(object sender, EventArgs e)
         {
@@ -151,15 +98,5 @@ namespace Com.AC3
            txtVelocity.Text= trbVelocity.Value.ToString();
         }
 
-        private void mySerial_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            string txtRecived;
-            if (mySerial.IsOpen)
-            {
-                txtRecived = mySerial.ReadLine();
-                myComManager.ReadFeedback(txtRecived);
-
-            }   
-        }
     }
 }
