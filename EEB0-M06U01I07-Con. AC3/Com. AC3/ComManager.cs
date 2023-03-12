@@ -15,8 +15,7 @@ namespace Com.AC3
         // Objects
         static SerialPort mySerial = new SerialPort();
         static Motor myMotor = new Motor();
-        static OrdersToSend myOrders;
-        static Timer Timeout = new Timer();
+        static OrdersToSend myOrders = new OrdersToSend(true);
 
         // Conexion Data Propieties 
         private string [] Data;
@@ -57,7 +56,6 @@ namespace Com.AC3
                             mySerial.Open();
 
                             //Orders and feedback conexion
-                            myOrders = new OrdersToSend(true);
                             SendOrder();
                             ReadFeedback();
 
@@ -118,7 +116,7 @@ namespace Com.AC3
         // Read and Save Feedback
         private void SaveData(string str)
         {
-            while(str == null)
+            if(str == null)
             {
                 ComError = true; return;
             }
