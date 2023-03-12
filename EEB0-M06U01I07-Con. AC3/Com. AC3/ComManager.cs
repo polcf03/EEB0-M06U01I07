@@ -175,14 +175,15 @@ namespace Com.AC3
                     }
                     else if (Fdb[1] == "DISO")
                     {
+                        mySerial.Close();
                         ConexionState = false;
-                        setDataMotor();
+                        setDataMotorOFF();
                     }
                     else
                     {
                         ComError = true;
                         ConexionState = false;
-                        setDataMotor();
+                        setDataMotorOFF();
                     }
                     break;
 
@@ -197,33 +198,24 @@ namespace Com.AC3
                             }
                             else if (Fdb[3] == "WR")
                             {
-                                setDataMotor();
+                                setDataMotorOFF();
                                 ComError = true;
                             }
-                            else
-                            {
-                                ComError = true;
-                            }
+                            else{ ComError = true; }
                         }
                         else if (Fdb[2] == "OFF")
                         {
                             if (Fdb[3] == "OK")
                             {
-                                setDataMotor();
+                                setDataMotorOFF();
                             }
                             else if (Fdb[3] == "WR")
                             {
                                 ComError = true;
                             }
-                            else
-                            {
-                                ComError = true;
-                            }
+                            else { ComError = true; }
                         }
-                        else
-                        {
-                            ComError = true;
-                        }
+                        else { ComError = true; }
                     }
                     else if (Fdb[1] == "DIR")
                     {
@@ -235,34 +227,38 @@ namespace Com.AC3
                         {
                             ComError = true;
                         }
-                        else
-                        {
-                            ComError = true;
-                        }
+                        else { ComError = true; }
                     }
-                    else
-                    {
-                        ComError = true;
-                    }
+                    else { ComError = true; }
                     break;
 
                 case "INF":
-                    bool i = false;
                     if (Fdb[1] == "ON")
                     {
-                        i = true;
-                        if (Fdb[2] == R)
-                        setDataMotor(Fdb[2], i, Int32.Parse(Fdb[3]));
+                        if (Fdb[2] == "RIG")
+                        {
+                            setDataMotor(true, true, Int32.Parse(Fdb[3]));
+                        }
+                        else if(Fdb[2] == "LFT")
+                        {
+                            setDataMotor(false, true, Int32.Parse(Fdb[3]));
+                        }
+                        else { ComError = true; }
+
                     }
                     else if (Fdb[1]=="OFF")
                     {
-                        i = false;
-                        setDataMotor(Fdb[2], i, Int32.Parse(Fdb[3]));
+                        if (Fdb[2] == "RIG")
+                        {
+                            setDataMotor(true, false, Int32.Parse(Fdb[3]));
+                        }
+                        else if(Fdb[2] == "LFT")
+                        {
+                            setDataMotor(false, false, Int32.Parse(Fdb[3]));
+                        }
+                        else { ComError = true; }
                     }
-                    else
-                    {
-                        ComError = false;
-                    }
+                    else { ComError = true; }
                     break;
             }
         }
@@ -307,7 +303,7 @@ namespace Com.AC3
         }
         
         // Motor data acces and modifier
-        private void setDataMotor()
+        private void setDataMotorOFF()
         {
             myMotor.Direction = true;
             myMotor.On = false;
