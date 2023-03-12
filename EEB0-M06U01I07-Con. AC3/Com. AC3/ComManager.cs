@@ -16,6 +16,7 @@ namespace Com.AC3
         static SerialPort mySerial = new SerialPort();
         static Motor myMotor = new Motor();
         static OrdersToSend myOrders;
+        static Timer Timeout = new Timer();
 
         // Conexion Data Propieties 
         private string [] Data;
@@ -117,7 +118,8 @@ namespace Com.AC3
         // Read and Save Feedback
         private void SaveData(string str)
         {
-            if(str == null)
+            
+            while(str == null)
             {
                 ComError = true; return;
             }
