@@ -74,8 +74,7 @@ namespace Com.AC3
             order = "#INF$EST&%#";
         }
 
-        //Order Access
+        // Order Access
         public string Order () { return order; }
     }
 }
-    

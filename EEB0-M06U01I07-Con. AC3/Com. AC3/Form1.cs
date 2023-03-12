@@ -35,22 +35,18 @@ namespace Com.AC3
             if (!myComManager.getComError() && myComManager.getConexionState())
             {
                 btConDis.Text = "Disconnect";
-                btConDis.BackColor = Color.Red;
             }
             else if (myComManager.getComError() && !myComManager.getConexionState())
             {
                 btConDis.Text = "Disconnect";
-                btConDis.BackColor = Color.Red;
             }
             else if (!myComManager.getComError() && !myComManager.getConexionState())
             {
                 btConDis.Text = "Connect";
-                btConDis.BackColor = Color.Green;
             }
             else
             {
                 btConDis.Text = "Connect";
-                btConDis.BackColor = Color.Green;
             }
             myComManager.ResetComError();
         }
@@ -107,10 +103,13 @@ namespace Com.AC3
         // Reset graphics by Feedback
         private void timer1_Tick(object sender, EventArgs e)
         {
-            myComManager.OrderINF();
-            myComManager.SendOrder();
-            myComManager.ReadFeedback();
-            GraphicsFeedback();
+            if(myComManager.getConexionState() && !myComManager.getComError())
+            {
+                myComManager.OrderINF();
+                myComManager.SendOrder();
+                myComManager.ReadFeedback();
+                GraphicsFeedback();
+            }
         }
         private void GraphicsFeedback()
         {

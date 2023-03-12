@@ -323,9 +323,6 @@ namespace Com.AC3
         public bool getDirectionMotor() { return myMotor.Direction; }
         public bool getOnMotor() { return myMotor.On; }
         public int getVelocityMotor() { return myMotor.Velocity; }
-
-
-
     }
 }
 
