@@ -15,7 +15,7 @@ namespace Com.AC3
         // Objects
         static SerialPort mySerial = new SerialPort();
         static Motor myMotor = new Motor();
-        static OrdersToSend myOrders = new OrdersToSend(true);
+        static OrdersToSend myOrders;
 
         // Conexion Data Propieties 
         private string [] Data;
@@ -54,9 +54,9 @@ namespace Com.AC3
 
                             //Serial Conexion
                             mySerial.Open();
-             
-                          
+
                             //Orders and feedback conexion
+                            myOrders = new OrdersToSend(true);
                             SendOrder();
                             ReadFeedback();
 
@@ -275,6 +275,19 @@ namespace Com.AC3
             UploadFeedback(Data);
         }
 
+        // Read Order to send
+        private string Order()
+        {
+            return myOrders.Order();
+        }
+
+        // Send Order
+        public void SendOrder()
+        {
+            string str = Order();
+            mySerial.Write(str);
+        }
+
         // Conexion Satate acces
         public bool getConexionState() { return ConexionState; }
         public bool getComError() { return ComError; }
@@ -293,19 +306,6 @@ namespace Com.AC3
             myOrders.OrderINF();
         }
         
-        // Read Order to send
-        private string Order()
-        {
-            return myOrders.Order();
-        }
-
-        // Send Order
-        public void SendOrder()
-        {
-            string str = Order();
-            mySerial.Write(str);
-        }
-
         // Motor data acces and modifier
         private void setDataMotor()
         {

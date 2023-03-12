@@ -16,7 +16,7 @@ namespace Com.AC3
         // Objects
         static ComManager myComManager = new ComManager();
 
-        //Constructor
+        // Constructor
         public Form1()
         {
             InitializeComponent();
@@ -116,7 +116,7 @@ namespace Com.AC3
             }
         }
 
-        //Velcity bar mesure
+        // Velcity bar mesure
         private void txtVelocity_TextChanged(object sender, EventArgs e)
         {
             trbVelocity.Value = Int32.Parse(txtVelocity.Text);
@@ -129,7 +129,7 @@ namespace Com.AC3
             txtVelocity.Text = trbVelocity.Value.ToString();
         }
 
-        //Reset graphics by Feedback
+        // Reset graphics by Feedback
         private void timer1_Tick(object sender, EventArgs e)
         {
             myComManager.OrderINF();
