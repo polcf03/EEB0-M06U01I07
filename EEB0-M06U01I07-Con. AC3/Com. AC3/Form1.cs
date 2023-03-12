@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO.Ports;
 using System.Threading;
+using System.CodeDom.Compiler;
 
 namespace Com.AC3
 {
@@ -51,6 +52,7 @@ namespace Com.AC3
                 btConDis.Text = "Connect";
                 btConDis.BackColor = Color.Green;
             }
+            myComManager.ResetComError();
         }
 
         // Controls
@@ -59,61 +61,34 @@ namespace Com.AC3
             myComManager.OrderCON(3, false, trbVelocity.Value);
             myComManager.SendOrder();
             myComManager.ReadFeedback();
-            
-            if (!myComManager.getComError())
-            {
-                if (!myComManager.getDirectionMotor())
-                {
-                    btLeft.Enabled = false;
-                    btRight.Enabled = true;
-                }
-            }     
+            if (!myComManager.getComError()) { GraphicsFeedback(); }   
+            myComManager.ResetComError();
         }
         private void btRight_Click(object sender, EventArgs e)
         {
             myComManager.OrderCON(3, true, trbVelocity.Value);
             myComManager.SendOrder();
             myComManager.ReadFeedback();
-           
-            if (!myComManager.getComError())
-            {
-                if (myComManager.getDirectionMotor())
-                {
-                    btLeft.Enabled = true;
-                    btRight.Enabled = false;
-                }
-            }
+            if (!myComManager.getComError()) { GraphicsFeedback(); }
+            myComManager.ResetComError();
         }
         private void btStrStp_Click(object sender, EventArgs e)
         {
-            if(!myComManager.getOnMotor())
-            {
-                myComManager.OrderCON(0, true, trbVelocity.Value);
-                myComManager.SendOrder();
-                myComManager.ReadFeedback();
-                
-                if (!myComManager.getComError())
-                {
-                    if (myComManager.getOnMotor())
-                    {
-                        btStrStp.Text = "ON";
-                    }
-                    else
-                    {
-                        btStrStp.Text = "OFF";
-                    }
-                }
-            }            
+            if(!myComManager.getOnMotor()) { myComManager.OrderCON(0, myComManager.getDirectionMotor(), trbVelocity.Value); }    
+            else { myComManager.OrderCON(1,true,0); }
+            myComManager.SendOrder();
+            myComManager.ReadFeedback();
+            if (!myComManager.getComError()) { GraphicsFeedback(); }
+            myComManager.ResetComError();
+
         }
         private void btVel_Click(object sender, EventArgs e)
         {
             myComManager.OrderCON(2, myComManager.getDirectionMotor(), trbVelocity.Value);
             myComManager.SendOrder();
             myComManager.ReadFeedback();
-            if(!myComManager.getComError())
-            {
-                txtVelocity.Text = myComManager.getVelocityMotor().ToString();
-            }
+            if (!myComManager.getComError()) { GraphicsFeedback(); }
+            myComManager.ResetComError();
         }
 
         // Velcity bar mesure

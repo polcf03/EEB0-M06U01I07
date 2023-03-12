@@ -12,7 +12,7 @@ namespace Com.AC3
         private bool on;
         private int velocity;
 
-        //Constructor
+        // Constructor
         public Motor()
         {
             direction = true;

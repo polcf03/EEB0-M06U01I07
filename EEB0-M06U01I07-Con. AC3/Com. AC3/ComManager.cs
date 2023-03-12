@@ -117,6 +117,10 @@ namespace Com.AC3
         // Read and Save Feedback
         private void SaveData(string str)
         {
+            if(str == null)
+            {
+                ComError = true; return;
+            }
             char [] c = str.ToCharArray();
             string a = "";
             int i = 0;
@@ -284,9 +288,10 @@ namespace Com.AC3
             mySerial.Write(str);
         }
 
-        // Conexion Satate acces
+        // Conexion Satate acces and modifier
         public bool getConexionState() { return ConexionState; }
         public bool getComError() { return ComError; }
+        public void ResetComError() { ComError = false; }
 
         // Create New Order
         public void OrderSTM(bool connect)
@@ -319,5 +324,12 @@ namespace Com.AC3
         public bool getDirectionMotor() { return myMotor.Direction; }
         public bool getOnMotor() { return myMotor.On; }
         public int getVelocityMotor() { return myMotor.Velocity; }
+
+
+
     }
 }
+
+
+
+
