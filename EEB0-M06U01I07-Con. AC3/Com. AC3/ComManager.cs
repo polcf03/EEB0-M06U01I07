@@ -118,7 +118,6 @@ namespace Com.AC3
         // Read and Save Feedback
         private void SaveData(string str)
         {
-            
             while(str == null)
             {
                 ComError = true; return;

@@ -134,5 +134,7 @@ namespace Com.AC3
             }
             txtVelocity.Text = myComManager.getVelocityMotor().ToString();
         }
+
+        
     }
 }
