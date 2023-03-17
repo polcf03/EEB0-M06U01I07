@@ -17,7 +17,7 @@ namespace Com.AC3
         static Motor myMotor = new Motor();
         static FrameManager myFrameManager = new FrameManager(true);
 
-        // Conexion Data Propieties 
+        // Class varables
         private bool ConexionState, ComError, firstCom;
         private string Port;
 
@@ -30,7 +30,7 @@ namespace Com.AC3
             Port = "";
         }
 
-        //Conexion
+        // Conexion
         public void Conexion()
         {
             string str;
@@ -56,12 +56,11 @@ namespace Com.AC3
                             //Orders and feedback conexion
                             SendOrder();
                             ReadFeedback();
-
                             if (getComError())
                             {
                                 mySerial.Close();
+                                ComError = false;
                             }
-                            firstCom = false;
                         }
                         catch (Exception)
                         {
@@ -73,26 +72,25 @@ namespace Com.AC3
                 {
                     try
                     {
-                        //Serial Pârameters
+                        // Serial Pârameters
                         mySerial.PortName = Port;
                         mySerial.BaudRate = 19200;
                         mySerial.Encoding = System.Text.Encoding.Default;
                         mySerial.ReadTimeout = 2000;
                         mySerial.WriteTimeout = 2000;
 
-
-                        //Serial Conexion
-                        OrderSTM(true);
+                        // Serial Conexion
                         mySerial.Open();
-                        mySerial.Write(Order());
 
-                        //Orders and feedback conexion
-                        str = mySerial.ReadLine();
+                        // Orders and feedback conexion
+                        SendOrder("STM", "CON", "", "");
                         ReadFeedback();
+                        
 
                         if (getComError())
                         {
                             mySerial.Close();
+                            ComError = false;
                         }
                         firstCom = false;
                     }
@@ -110,155 +108,176 @@ namespace Com.AC3
             }
         }
 
-        // Save Serial data
-        // Read and Save Feedback
-
-        private  void UploadFeedback(string[] Fdb)
-        {
-            switch (Fdb[0])
-            {
-                default:
-                    ComError = true;
-                    break;
-                case "STM":
-                    if (Fdb[1] == "CONO")
-                    {
-                        ConexionState = true;
-                    }
-                    else if (Fdb[1] == "DISO")
-                    {
-                        mySerial.Close();
-                        ConexionState = false;
-                        setDataMotorOFF();
-                    }
-                    else
-                    {
-                        ComError = true;
-                        ConexionState = false;
-                        setDataMotorOFF();
-                    }
-                    break;
-
-                case "CON":
-                    if (Fdb[1] == "MOV")
-                    {
-                        if (Fdb[2] == "ON")
-                        {
-                            if (Fdb[3] == "OK")
-                            {
-                                setDataMotor(true, true, 20);
-                            }
-                            else if (Fdb[3] == "WR")
-                            {
-                                setDataMotorOFF();
-                                ComError = true;
-                            }
-                            else{ ComError = true; }
-                        }
-                        else if (Fdb[2] == "OFF")
-                        {
-                            if (Fdb[3] == "OK")
-                            {
-                                setDataMotorOFF();
-                            }
-                            else if (Fdb[3] == "WR")
-                            {
-                                ComError = true;
-                            }
-                            else { ComError = true; }
-                        }
-                        else { ComError = true; }
-                    }
-                    else if (Fdb[1] == "DIR")
-                    {
-                        if (Fdb[2] == "OK")
-                        {
-
-                        }
-                        else if (Fdb[2] == "WR")
-                        {
-                            ComError = true;
-                        }
-                        else { ComError = true; }
-                    }
-                    else { ComError = true; }
-                    break;
-
-                case "INF":
-                    if (Fdb[1] == "ON")
-                    {
-                        if (Fdb[2] == "RIG")
-                        {
-                            setDataMotor(true, true, Int32.Parse(Fdb[3]));
-                        }
-                        else if(Fdb[2] == "LFT")
-                        {
-                            setDataMotor(false, true, Int32.Parse(Fdb[3]));
-                        }
-                        else { ComError = true; }
-
-                    }
-                    else if (Fdb[1]=="OFF")
-                    {
-                        if (Fdb[2] == "RIG")
-                        {
-                            setDataMotor(true, false, Int32.Parse(Fdb[3]));
-                        }
-                        else if(Fdb[2] == "LFT")
-                        {
-                            setDataMotor(false, false, Int32.Parse(Fdb[3]));
-                        }
-                        else { ComError = true; }
-                    }
-                    else { ComError = true; }
-                    break;
-            }
-        }
+        
 
         // Read and Upload Feedback
         public void ReadFeedback()
         {
             string str = mySerial.ReadLine();
-            SaveData(str);
-            UploadFeedback(Data);
-        }
+            myFrameManager.Frame(str);
+            UploadData(myFrameManager.getCommand(),myFrameManager.getArg1(),myFrameManager.getArg2(),myFrameManager.getArg3());
 
-        // Read Order to send
-        private string Order()
-        {
-            return myOrders.Order();
+            // Upload Motor and conexion state data
+            void UploadData(string Command, string Arg1, string Arg2, string Arg3)
+            {
+                switch (Command)
+                {
+                    case "STM":
+                        switch (Arg1)
+                        {
+                            case "CONO":
+                                ConexionState = true;
+                                break;
+                            case "DISO":
+                                ConexionState = false;
+                                break;
+                            default:
+                                ConexionState = false;
+                                ComError = true;
+                                break;
+                        }
+                        break;
+                    case "CON":
+                        switch (Arg1)
+                        {
+                            case "MOV":
+                                switch (Arg2)
+                                {
+                                    case "ON":
+                                        if (Arg3 == "OK")
+                                        {
+                                            myMotor.updateOn();
+                                        }
+                                        else if (Arg3 == "WR")
+                                        {
+                                            myMotor.resetNewOn();
+                                            ComError = true;
+                                        }
+                                        else
+                                        {
+                                            myMotor.resetNewOn();
+                                            ComError = true;
+                                        }
+                                        break;
+                                    case "OFF":
+                                        if (Arg3 == "OK")
+                                        {
+                                            myMotor.updateOn();
+                                        }
+                                        else if (Arg3 == "WR")
+                                        {
+                                            myMotor.resetNewOn();
+                                            ComError = true;
+                                        }
+                                        else
+                                        {
+                                            myMotor.resetNewOn();
+                                            ComError = true;
+                                        }
+                                        break;
+                                    default:
+                                        myMotor.resetNewOn();
+                                        ComError = true;
+                                        break;
+                                }
+                                break;
+                            case "VEL":
+                                if (Arg2 == "OK")
+                                {
+                                    myMotor.updateVelocity();
+                                }
+                                else if (Arg2 == "WR")
+                                {
+                                    myMotor.resetNewVelocity();
+                                    ComError = true;
+                                }
+                                else
+                                {
+                                    myMotor.resetNewVelocity();
+                                    ComError = true;
+                                }
+                                break;
+                            case "DIR":
+                                if (Arg2 == "OK")
+                                {
+                                    myMotor.updateDirection();
+                                }
+                                else if (Arg2 == "WR")
+                                {
+                                    myMotor.resetNewDirection();
+                                    ComError = true;
+                                }
+                                else
+                                {
+                                    myMotor.resetNewDirection();
+                                    ComError = true;
+                                }
+                                break;
+                            default: ComError = true; break;
+                        }
+                        break;
+                    case "INF":
+                        try
+                        {
+                            if (Arg1 == "ON")
+                            {
+                                myMotor.setCurrentOn(true);
+                            }
+                            else if (Arg1 == "OFF")
+                            {
+                                myMotor.setCurrentOn(false);
+                            }
+                            else { ComError = true; }
+
+                            if (Arg2 != "RIG" && Arg2 != "LFT")
+                            {
+                                ComError = true;
+                            }
+                            else { myMotor.setCurrentDirection(Arg2); }
+
+                            int a;
+                            a = Int32.Parse(Arg3);
+                            if (0 <= a && a >= 100)
+                            {
+                                myMotor.setCurrentVelocity(a);
+                            }
+                            else { ComError = true; }
+                        }
+                        catch (Exception)
+                        {
+                            ComError = true;
+                        }
+                        break;
+                    default:
+                        ComError = true;
+                        break;
+                }
+            }
+
         }
 
         // Send Order
-        public void SendOrder()
+        public  void SendOrder()
         {
-            string str = Order();
+            string str;
+            str = myFrameManager.Order();
+            mySerial.Write(str);
+        }
+        public void SendOrder(string Command, string Arg1, string Arg2, string Arg3)
+        {
+            string str;
+            str = myFrameManager.Order(Command, Arg1, Arg2, Arg3);
             mySerial.Write(str);
         }
 
-        // Conexion Satate acces and modifier
+        // Complete dialogue
+
+        // Conexion state accessor and modifier
         public bool getConexionState() { return ConexionState; }
         public bool getComError() { return ComError; }
         public void ResetComError() { ComError = false; }
 
-        
-        // Motor data acces and modifier
-        private void setDataMotorOFF()
-        {
-            myMotor.Direction = true;
-            myMotor.On = false;
-            myMotor.Velocity = 0;
-        }
-        private void setDataMotor (bool Direction, bool On, int Velocity)
-        {
-            myMotor.Direction = Direction;
-            myMotor.On = On;
-            myMotor.Velocity = Velocity;
-        }
 
-        public bool getDirectionMotor() { return myMotor.Direction; }
-        public bool getOnMotor() { return myMotor.On; }
-        public int getVelocityMotor() { return myMotor.Velocity; }
     }
 }
 
