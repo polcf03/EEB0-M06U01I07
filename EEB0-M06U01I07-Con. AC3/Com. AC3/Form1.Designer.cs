@@ -61,6 +61,7 @@
             this.btRight.TabIndex = 0;
             this.btRight.Text = "Right";
             this.btRight.UseVisualStyleBackColor = true;
+            this.btRight.Click += new System.EventHandler(this.btRight_Click);
             // 
             // btLeft
             // 
@@ -71,6 +72,7 @@
             this.btLeft.TabIndex = 1;
             this.btLeft.Text = "Left";
             this.btLeft.UseVisualStyleBackColor = true;
+            this.btLeft.Click += new System.EventHandler(this.btLeft_Click);
             // 
             // btStrStp
             // 
@@ -81,6 +83,7 @@
             this.btStrStp.TabIndex = 2;
             this.btStrStp.Text = "ON";
             this.btStrStp.UseVisualStyleBackColor = true;
+            this.btStrStp.Click += new System.EventHandler(this.btStrStp_Click);
             // 
             // trbVelocity
             // 
@@ -179,6 +182,7 @@
             this.btVel.TabIndex = 11;
             this.btVel.Text = "Send Vel";
             this.btVel.UseVisualStyleBackColor = true;
+            this.btVel.Click += new System.EventHandler(this.btVel_Click);
             // 
             // menuStrip1
             // 
@@ -187,7 +191,7 @@
             this.dataToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(471, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(436, 24);
             this.menuStrip1.TabIndex = 12;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -212,6 +216,7 @@
             this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
             this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.disconnectToolStripMenuItem.Text = "Disconnect";
+            this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
             // 
             // dataToolStripMenuItem
             // 
@@ -231,7 +236,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(471, 405);
+            this.ClientSize = new System.Drawing.Size(436, 331);
             this.Controls.Add(this.btVel);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.prbFeedback);

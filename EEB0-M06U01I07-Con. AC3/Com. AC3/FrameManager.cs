@@ -113,9 +113,9 @@ namespace Com.AC3
         public string getArg3() { return arg3; }
 
         // Modifier
-        public void setCommand(string str) { command = str; }
-        public void setArg1(string str) { arg1 = str; }
-        public void setArg2(string str) { arg2 = str; }
-        public void setArg3(string str) { arg3 = str; }
+        private void setCommand(string str) { command = str; }
+        private void setArg1(string str) { arg1 = str; }
+        private void setArg2(string str) { arg2 = str; }
+        private void setArg3(string str) { arg3 = str; }
     }
 }
