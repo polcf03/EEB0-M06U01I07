@@ -15,17 +15,15 @@ namespace Com.AC3
         // Objects
         static SerialPort mySerial = new SerialPort();
         static Motor myMotor = new Motor();
-        static OrdersToSend myOrders = new OrdersToSend(true);
+        static FrameManager myFrameManager = new FrameManager(true);
 
         // Conexion Data Propieties 
-        private string [] Data;
         private bool ConexionState, ComError, firstCom;
         private string Port;
 
         // Constructors
         public ComManager()
         {
-            Data = new string[] {"", "", "", ""};
             ConexionState = false;
             ComError = false;
             firstCom = true;
@@ -114,56 +112,7 @@ namespace Com.AC3
 
         // Save Serial data
         // Read and Save Feedback
-        private void SaveData(string str)
-        {
-            if(str == null)
-            {
-                ComError = true; return;
-            }
-            char [] c = str.ToCharArray();
-            string a = "";
-            int i = 0;
-            do
-            {
-                a += c[i];
-                i++;
-            }
-            while (c[i] != '#');
-            a = "";
-            i++;
-            while (c[i] != '$')
-            {
-                a += c[i];
-                i++;
-            }
-            Data[0] = a;
-            a = "";
-            i++;
-            while (c[i] != '&')
-            {
-                a += c[i];
-                i++;
-            }
-            Data[1] = a;
-            a = "";
-            i++;
-            while (c[i] != '%')
-            {
-                a += c[i];
-                i++;
-            }
-            Data[2] = a;
-            a = "";
-            i++;
-            while (c[i] != '#')
-            {
-                a += c[i];
-                i++;
-            }
-            Data[3] = a;
-            a = "";
-            i++;
-        }
+
         private  void UploadFeedback(string[] Fdb)
         {
             switch (Fdb[0])
@@ -292,19 +241,6 @@ namespace Com.AC3
         public bool getComError() { return ComError; }
         public void ResetComError() { ComError = false; }
 
-        // Create New Order
-        public void OrderSTM(bool connect)
-        {
-            myOrders.OrderSTM(connect);
-        }
-        public void OrderCON(int Mode, bool dir, int vel)
-        {
-            myOrders.OrderCON(Mode, dir, vel);
-        }
-        public void OrderINF()
-        {
-            myOrders.OrderINF();
-        }
         
         // Motor data acces and modifier
         private void setDataMotorOFF()

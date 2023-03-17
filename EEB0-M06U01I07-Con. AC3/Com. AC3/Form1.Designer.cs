@@ -43,12 +43,17 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.FeedbackTimer = new System.Windows.Forms.Timer(this.components);
             this.btVel = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.conexionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.conectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.disconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.trbVelocity)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btRight
             // 
-            this.btRight.Location = new System.Drawing.Point(74, 76);
+            this.btRight.Location = new System.Drawing.Point(74, 92);
             this.btRight.Margin = new System.Windows.Forms.Padding(2);
             this.btRight.Name = "btRight";
             this.btRight.Size = new System.Drawing.Size(56, 61);
@@ -59,7 +64,7 @@
             // 
             // btLeft
             // 
-            this.btLeft.Location = new System.Drawing.Point(11, 76);
+            this.btLeft.Location = new System.Drawing.Point(11, 92);
             this.btLeft.Margin = new System.Windows.Forms.Padding(2);
             this.btLeft.Name = "btLeft";
             this.btLeft.Size = new System.Drawing.Size(56, 61);
@@ -70,7 +75,7 @@
             // 
             // btStrStp
             // 
-            this.btStrStp.Location = new System.Drawing.Point(9, 10);
+            this.btStrStp.Location = new System.Drawing.Point(9, 26);
             this.btStrStp.Margin = new System.Windows.Forms.Padding(2);
             this.btStrStp.Name = "btStrStp";
             this.btStrStp.Size = new System.Drawing.Size(123, 61);
@@ -81,7 +86,7 @@
             // 
             // trbVelocity
             // 
-            this.trbVelocity.Location = new System.Drawing.Point(9, 178);
+            this.trbVelocity.Location = new System.Drawing.Point(9, 194);
             this.trbVelocity.Margin = new System.Windows.Forms.Padding(2);
             this.trbVelocity.Maximum = 100;
             this.trbVelocity.Name = "trbVelocity";
@@ -103,7 +108,7 @@
             // 
             // txtVelocity
             // 
-            this.txtVelocity.Location = new System.Drawing.Point(9, 155);
+            this.txtVelocity.Location = new System.Drawing.Point(9, 171);
             this.txtVelocity.Margin = new System.Windows.Forms.Padding(2);
             this.txtVelocity.Name = "txtVelocity";
             this.txtVelocity.Size = new System.Drawing.Size(124, 20);
@@ -115,7 +120,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Location = new System.Drawing.Point(47, 139);
+            this.label1.Location = new System.Drawing.Point(47, 155);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(47, 13);
@@ -127,7 +132,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label2.Location = new System.Drawing.Point(78, 158);
+            this.label2.Location = new System.Drawing.Point(78, 174);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(15, 13);
@@ -136,7 +141,7 @@
             // 
             // prbFeedback
             // 
-            this.prbFeedback.Location = new System.Drawing.Point(9, 234);
+            this.prbFeedback.Location = new System.Drawing.Point(9, 250);
             this.prbFeedback.Margin = new System.Windows.Forms.Padding(2);
             this.prbFeedback.Name = "prbFeedback";
             this.prbFeedback.Size = new System.Drawing.Size(123, 19);
@@ -145,7 +150,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(40, 218);
+            this.label3.Location = new System.Drawing.Point(40, 234);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 13);
@@ -157,7 +162,7 @@
             // 
             this.lblFeedback.AutoSize = true;
             this.lblFeedback.BackColor = System.Drawing.Color.Transparent;
-            this.lblFeedback.Location = new System.Drawing.Point(100, 218);
+            this.lblFeedback.Location = new System.Drawing.Point(100, 234);
             this.lblFeedback.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFeedback.Name = "lblFeedback";
             this.lblFeedback.Size = new System.Drawing.Size(30, 13);
@@ -166,7 +171,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(184, 10);
+            this.textBox1.Location = new System.Drawing.Point(194, 26);
             this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
@@ -180,7 +185,7 @@
             // 
             // btVel
             // 
-            this.btVel.Location = new System.Drawing.Point(42, 257);
+            this.btVel.Location = new System.Drawing.Point(42, 273);
             this.btVel.Margin = new System.Windows.Forms.Padding(2);
             this.btVel.Name = "btVel";
             this.btVel.Size = new System.Drawing.Size(58, 25);
@@ -188,6 +193,37 @@
             this.btVel.Text = "Send Vel";
             this.btVel.UseVisualStyleBackColor = true;
             this.btVel.Click += new System.EventHandler(this.btVel_Click);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.conexionToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(471, 24);
+            this.menuStrip1.TabIndex = 12;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // conexionToolStripMenuItem
+            // 
+            this.conexionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.conectToolStripMenuItem,
+            this.disconnectToolStripMenuItem});
+            this.conexionToolStripMenuItem.Name = "conexionToolStripMenuItem";
+            this.conexionToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
+            this.conexionToolStripMenuItem.Text = "Conexion";
+            // 
+            // conectToolStripMenuItem
+            // 
+            this.conectToolStripMenuItem.Name = "conectToolStripMenuItem";
+            this.conectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.conectToolStripMenuItem.Text = "Connect";
+            // 
+            // disconnectToolStripMenuItem
+            // 
+            this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
+            this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.disconnectToolStripMenuItem.Text = "Disconnect";
             // 
             // Form1
             // 
@@ -207,10 +243,14 @@
             this.Controls.Add(this.btStrStp);
             this.Controls.Add(this.btLeft);
             this.Controls.Add(this.btRight);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.trbVelocity)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -232,6 +272,10 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Timer FeedbackTimer;
         private System.Windows.Forms.Button btVel;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem conexionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem conectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem disconnectToolStripMenuItem;
     }
 }
 
