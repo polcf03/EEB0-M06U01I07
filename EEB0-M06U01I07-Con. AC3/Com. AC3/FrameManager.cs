@@ -10,7 +10,7 @@ namespace Com.AC3
         // Class varables
         string command, arg1, arg2, arg3, order;
 
-        //Constructor
+        // Constructor
         public FrameManager()
         {
             command = "";
@@ -80,40 +80,43 @@ namespace Com.AC3
 
         }
 
-        // Args Modifier
-        public void setFramesArgs(string Command, string Arg1, string Arg2, string Arg3)
+        // Order creator 
+        public string Order()
+        {
+            CreateFrame();
+            return order;
+        }
+        public string Order(string Command, string Arg1, string Arg2, string Arg3)
+        {
+            setFramesArgs(Command, Arg1, Arg2, Arg3);
+            CreateFrame();
+            return order;
+        }
+
+        // Args Modifier and frame creator
+        private void setFramesArgs(string Command, string Arg1, string Arg2, string Arg3)
         {
             command = Command;
             arg1 = Arg1;
             arg2 = Arg2;
             arg3 = Arg3;
         }
-
-        // Create Order
-        public void CreateOrder()
+        private void CreateFrame()
         {
             order = "#" + command + "$" + arg1 + "&" + arg2 + "%" + arg3 + "#";
         }
 
-        // Order Modifier
-        public string Order(string Command, string Arg1, string Arg2, string Arg3)
-        {
-            setFramesArgs(Command, Arg1, Arg2, Arg3);
-            CreateOrder();
-            return order;
-        }
-
-
         // Accessors
-        public string Command() { return command; }
-        public string Arg1() { return arg1; }
-        public string Arg2() { return arg2; }
-        public string Arg3() { return arg3; }
+        public string getCommand() { return command; }
+        public string getArg1() { return arg1; }
+        public string getArg2() { return arg2; }
+        public string getArg3() { return arg3; }
 
         // Modifier
-        public void Command(string str) { command = str; }
-        public void Arg1(string str) { arg1 = str; }
-        public void Arg2(string str) { arg2 = str; }
-        public void Arg3(string str) { arg3 = str; }
+        public void setCommand(string str) { command = str; }
+        public void setArg1(string str) { arg1 = str; }
+        public void setArg2(string str) { arg2 = str; }
+        public void setArg3(string str) { arg3 = str; }
     }
 }
+ 
