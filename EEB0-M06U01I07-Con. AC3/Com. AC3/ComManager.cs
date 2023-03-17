@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.IO.Ports;
 using System.Threading;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 
 namespace Com.AC3
 {
@@ -20,6 +21,7 @@ namespace Com.AC3
         // Class varables
         private bool ConexionState, ComError, firstCom;
         private string Port;
+        
 
         // Constructors
         public ComManager()
@@ -49,6 +51,7 @@ namespace Com.AC3
                             mySerial.ReadTimeout = 2000;
                             mySerial.WriteTimeout = 2000;
 
+                            mySerial.ReadTimeout = 500;
                             //Serial Conexion
                             mySerial.Open();
 
@@ -103,9 +106,18 @@ namespace Com.AC3
         // Read and Upload Feedback
         private void ReadFeedback()
         {
-            string str = mySerial.ReadLine();
-            myFrameManager.Frame(str);
-            UploadData(myFrameManager.getCommand(),myFrameManager.getArg1(),myFrameManager.getArg2(),myFrameManager.getArg3());
+            try
+            {
+                string str = mySerial.ReadLine();
+                myFrameManager.Frame(str);
+                UploadData(myFrameManager.getCommand(), myFrameManager.getArg1(), myFrameManager.getArg2(), myFrameManager.getArg3());
+
+            }
+            catch(Exception ex)
+            {
+                ComError = true;
+                mySerial.Close();
+            }
 
             // Upload Motor and conexion state data
             void UploadData(string Command, string Arg1, string Arg2, string Arg3)
@@ -248,26 +260,50 @@ namespace Com.AC3
         // Send Order
         private void SendOrder()
         {
-            string str;
-            str = myFrameManager.Order();
-            mySerial.Write(str);
+            try
+            {
+                string str;
+                str = myFrameManager.Order();
+                mySerial.Write(str);
+            }
+            catch(Exception ex) 
+            {
+                MessageBox.Show(ex.ToString());
+                mySerial.Close();
+                ConexionState = false;
+                ComError = true;
+            }
         }
         private void SendOrder(string Command, string Arg1, string Arg2, string Arg3)
         {
-            string str;
-            str = myFrameManager.Order(Command, Arg1, Arg2, Arg3);
-            mySerial.Write(str);
+            try
+            {
+                string str;
+                str = myFrameManager.Order(Command, Arg1, Arg2, Arg3);
+                mySerial.Write(str);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                mySerial.Close();
+                ConexionState = false;
+                ComError = true;
+            }
         }
 
-        // Accessor and modifier
+        // Modifier
+        public void setComError(bool state) { ComError = state; }
+
+        public void setNewDirection(string direction) { myMotor.setNewDirection(direction); }
+        public void setNewOn(bool on) { myMotor.setNewOn(on); }
+        public void setNewVelocity(int velocity) { myMotor.setCurrentVelocity(velocity);  }
+
+        // Accessor
         public bool getConexionState() { return ConexionState; }
         public bool getComError() { return ComError; }
+
         public bool getMotorOn() { return myMotor.getnCurrentOn(); }
-        public bool getMotorDirection()
-        {
-            if(myMotor.getCurrentDirection() == "RIG") { return true; }
-            else { return false; }
-        }
+        public string getMotorDirection() { return myMotor.getCurrentDirection(); }
         public int getMotorVelociity() { return myMotor.getCurrentVelocity(); }
 
 
