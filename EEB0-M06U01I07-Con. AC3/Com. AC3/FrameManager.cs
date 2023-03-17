@@ -119,4 +119,3 @@ namespace Com.AC3
         public void setArg3(string str) { arg3 = str; }
     }
 }
- 
