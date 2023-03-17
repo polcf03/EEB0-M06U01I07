@@ -84,11 +84,12 @@ namespace Com.AC3
             else
             {
                 FullCom("STM", "DIS", "", "");
+                ConexionState = false;
                 mySerial.Close();
             }
         }
 
-        // Complete dialogue
+        // Complete dialogue (Send and recieve)
         public void FullCom()
         {
             SendOrder(); ReadFeedback();
@@ -100,7 +101,7 @@ namespace Com.AC3
         }
 
         // Read and Upload Feedback
-        public void ReadFeedback()
+        private void ReadFeedback()
         {
             string str = mySerial.ReadLine();
             myFrameManager.Frame(str);
@@ -245,26 +246,30 @@ namespace Com.AC3
         }
 
         // Send Order
-        public  void SendOrder()
+        private void SendOrder()
         {
             string str;
             str = myFrameManager.Order();
             mySerial.Write(str);
         }
-        public void SendOrder(string Command, string Arg1, string Arg2, string Arg3)
+        private void SendOrder(string Command, string Arg1, string Arg2, string Arg3)
         {
             string str;
             str = myFrameManager.Order(Command, Arg1, Arg2, Arg3);
             mySerial.Write(str);
         }
 
-        // Conexion state accessor and modifier
+        // Accessor and modifier
         public bool getConexionState() { return ConexionState; }
         public bool getComError() { return ComError; }
-        public void ResetComError() { ComError = false; }
+        public bool getMotorOn() { return myMotor.getnCurrentOn(); }
+        public bool getMotorDirection()
+        {
+            if(myMotor.getCurrentDirection() == "RIG") { return true; }
+            else { return false; }
+        }
+        public int getMotorVelociity() { return myMotor.getCurrentVelocity(); }
+
+
     }
 }
-
-
-
-

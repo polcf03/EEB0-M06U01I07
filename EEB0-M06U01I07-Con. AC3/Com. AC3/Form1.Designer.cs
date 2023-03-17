@@ -33,7 +33,6 @@
             this.btLeft = new System.Windows.Forms.Button();
             this.btStrStp = new System.Windows.Forms.Button();
             this.trbVelocity = new System.Windows.Forms.TrackBar();
-            this.btConDis = new System.Windows.Forms.Button();
             this.txtVelocity = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -47,20 +46,21 @@
             this.conexionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.conectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.notepadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.trbVelocity)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btRight
             // 
-            this.btRight.Location = new System.Drawing.Point(74, 92);
+            this.btRight.Location = new System.Drawing.Point(71, 92);
             this.btRight.Margin = new System.Windows.Forms.Padding(2);
             this.btRight.Name = "btRight";
-            this.btRight.Size = new System.Drawing.Size(56, 61);
+            this.btRight.Size = new System.Drawing.Size(63, 61);
             this.btRight.TabIndex = 0;
             this.btRight.Text = "Right";
             this.btRight.UseVisualStyleBackColor = true;
-            this.btRight.Click += new System.EventHandler(this.btRight_Click);
             // 
             // btLeft
             // 
@@ -71,18 +71,16 @@
             this.btLeft.TabIndex = 1;
             this.btLeft.Text = "Left";
             this.btLeft.UseVisualStyleBackColor = true;
-            this.btLeft.Click += new System.EventHandler(this.btLeft_Click);
             // 
             // btStrStp
             // 
-            this.btStrStp.Location = new System.Drawing.Point(9, 26);
+            this.btStrStp.Location = new System.Drawing.Point(11, 27);
             this.btStrStp.Margin = new System.Windows.Forms.Padding(2);
             this.btStrStp.Name = "btStrStp";
             this.btStrStp.Size = new System.Drawing.Size(123, 61);
             this.btStrStp.TabIndex = 2;
             this.btStrStp.Text = "ON";
             this.btStrStp.UseVisualStyleBackColor = true;
-            this.btStrStp.Click += new System.EventHandler(this.btStrStp_Click);
             // 
             // trbVelocity
             // 
@@ -94,17 +92,6 @@
             this.trbVelocity.TabIndex = 3;
             this.trbVelocity.TickFrequency = 10;
             this.trbVelocity.ValueChanged += new System.EventHandler(this.trbVelocity_ValueChanged);
-            // 
-            // btConDis
-            // 
-            this.btConDis.Location = new System.Drawing.Point(9, 334);
-            this.btConDis.Margin = new System.Windows.Forms.Padding(2);
-            this.btConDis.Name = "btConDis";
-            this.btConDis.Size = new System.Drawing.Size(123, 61);
-            this.btConDis.TabIndex = 5;
-            this.btConDis.Text = "Connect";
-            this.btConDis.UseVisualStyleBackColor = true;
-            this.btConDis.Click += new System.EventHandler(this.btConDis_Click);
             // 
             // txtVelocity
             // 
@@ -192,12 +179,12 @@
             this.btVel.TabIndex = 11;
             this.btVel.Text = "Send Vel";
             this.btVel.UseVisualStyleBackColor = true;
-            this.btVel.Click += new System.EventHandler(this.btVel_Click);
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.conexionToolStripMenuItem});
+            this.conexionToolStripMenuItem,
+            this.dataToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(471, 24);
@@ -216,14 +203,29 @@
             // conectToolStripMenuItem
             // 
             this.conectToolStripMenuItem.Name = "conectToolStripMenuItem";
-            this.conectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.conectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.conectToolStripMenuItem.Text = "Connect";
+            this.conectToolStripMenuItem.Click += new System.EventHandler(this.conectToolStripMenuItem_Click);
             // 
             // disconnectToolStripMenuItem
             // 
             this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
-            this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.disconnectToolStripMenuItem.Text = "Disconnect";
+            // 
+            // dataToolStripMenuItem
+            // 
+            this.dataToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.notepadToolStripMenuItem});
+            this.dataToolStripMenuItem.Name = "dataToolStripMenuItem";
+            this.dataToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+            this.dataToolStripMenuItem.Text = "Export";
+            // 
+            // notepadToolStripMenuItem
+            // 
+            this.notepadToolStripMenuItem.Name = "notepadToolStripMenuItem";
+            this.notepadToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.notepadToolStripMenuItem.Text = "Notepad.txt";
             // 
             // Form1
             // 
@@ -238,7 +240,6 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtVelocity);
-            this.Controls.Add(this.btConDis);
             this.Controls.Add(this.trbVelocity);
             this.Controls.Add(this.btStrStp);
             this.Controls.Add(this.btLeft);
@@ -262,7 +263,6 @@
         private System.Windows.Forms.Button btLeft;
         private System.Windows.Forms.Button btStrStp;
         private System.Windows.Forms.TrackBar trbVelocity;
-        private System.Windows.Forms.Button btConDis;
         private System.Windows.Forms.TextBox txtVelocity;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -276,6 +276,8 @@
         private System.Windows.Forms.ToolStripMenuItem conexionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem conectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem disconnectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem notepadToolStripMenuItem;
     }
 }
 
