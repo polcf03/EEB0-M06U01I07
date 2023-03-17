@@ -33,7 +33,6 @@ namespace Com.AC3
         // Conexion
         public void Conexion()
         {
-            string str;
             if (!ConexionState)
             {
                 if (firstCom)
@@ -54,18 +53,11 @@ namespace Com.AC3
                             mySerial.Open();
 
                             //Orders and feedback conexion
-                            SendOrder();
-                            ReadFeedback();
-                            if (getComError())
-                            {
-                                mySerial.Close();
-                                ComError = false;
-                            }
+                            FullCom();
+                            if (getComError()) { mySerial.Close(); }
+                            firstCom = false;
                         }
-                        catch (Exception)
-                        {
-                            mySerial.Close();
-                        }
+                        catch (Exception) { mySerial.Close(); }
                     }
                 }
                 else
@@ -83,32 +75,29 @@ namespace Com.AC3
                         mySerial.Open();
 
                         // Orders and feedback conexion
-                        SendOrder("STM", "CON", "", "");
-                        ReadFeedback();
-                        
-
-                        if (getComError())
-                        {
-                            mySerial.Close();
-                            ComError = false;
-                        }
-                        firstCom = false;
+                        FullCom("STM", "CON", "", "");
+                        if (getComError()) { mySerial.Close(); }
                     }
-                    catch (Exception)
-                    {
-                        mySerial.Close();
-                    }
+                    catch (Exception) { mySerial.Close(); }
                 }
             }
             else
             {
-                OrderSTM(false);
-                SendOrder();
+                FullCom("STM", "DIS", "", "");
                 mySerial.Close();
             }
         }
 
-        
+        // Complete dialogue
+        public void FullCom()
+        {
+            SendOrder(); ReadFeedback();
+        }
+        public void FullCom(string Command, string Arg1, string Arg2, string Arg3)
+        {
+            SendOrder(Command, Arg1, Arg2, Arg3); 
+            ReadFeedback();
+        }
 
         // Read and Upload Feedback
         public void ReadFeedback()
@@ -253,7 +242,6 @@ namespace Com.AC3
                         break;
                 }
             }
-
         }
 
         // Send Order
@@ -270,14 +258,10 @@ namespace Com.AC3
             mySerial.Write(str);
         }
 
-        // Complete dialogue
-
         // Conexion state accessor and modifier
         public bool getConexionState() { return ConexionState; }
         public bool getComError() { return ComError; }
         public void ResetComError() { ComError = false; }
-
-
     }
 }
 

@@ -44,9 +44,9 @@ namespace Com.AC3
         public void setCurrentVelocity(int velocity) { currentVelocity = velocity; }
 
         // New motor data accessor
-        public string getNewDirection() { return newDirection; }
-        public bool getnNewOn() { return newOn; }
-        public int getNewVelocity() { return newVelocity; }
+        private string getNewDirection() { return newDirection; }
+        private bool getnNewOn() { return newOn; }
+        private int getNewVelocity() { return newVelocity; }
 
         // Current motor data modifier
         public void setNewDirection(string direction) { newDirection = direction; }
