@@ -32,21 +32,13 @@ namespace Com.AC3
         // Controls
         private void conectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (myComManager.getConexionState())
-            {
-                myComManager.FullCom("STM", "CON", "", "");
-                GraphicsFeedback();
-                myComManager.setComError(false);
-            }
+            myComManager.Conexion();
+            GraphicsFeedback();
         }
         private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (myComManager.getConexionState())
-            {
-                myComManager.FullCom("STM", "DIS", "", "");
-                GraphicsFeedback();
-                myComManager.setComError(false);
-            }
+            myComManager.Conexion();
+            GraphicsFeedback();
         }
         private void btStrStp_Click(object sender, EventArgs e)
         {
