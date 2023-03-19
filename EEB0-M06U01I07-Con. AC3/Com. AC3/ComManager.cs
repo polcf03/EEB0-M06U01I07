@@ -21,6 +21,7 @@ namespace Com.AC3
         // Class varables
         private bool ConexionState, ComError, firstCom;
         private string Port;
+        private string Data;
 
         // Constructors
         public ComManager()
@@ -29,6 +30,7 @@ namespace Com.AC3
             ComError = false;
             firstCom = true;
             Port = "";
+            Data = "";
         }
 
         // Conexion
@@ -107,6 +109,7 @@ namespace Com.AC3
             try
             {
                 string str = mySerial.ReadLine();
+                Data += str + "r/n/";
                 if (str == null && str == "")
                 {
                     ComError = true;
@@ -116,6 +119,7 @@ namespace Com.AC3
                     myFrameManager.Frame(str);
                     UploadData(myFrameManager.getCommand(), myFrameManager.getArg1(), myFrameManager.getArg2(), myFrameManager.getArg3());
                 }
+                
             }
             catch (Exception ex)
             {
@@ -268,6 +272,7 @@ namespace Com.AC3
             {
                 string str;
                 str = myFrameManager.Order(Command, Arg1, Arg2, Arg3);
+                Data += str + "r/n/";
                 mySerial.Write(str);
             }
             catch (Exception ex)
