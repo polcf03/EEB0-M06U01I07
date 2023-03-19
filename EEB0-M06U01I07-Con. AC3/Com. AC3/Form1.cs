@@ -32,13 +32,23 @@ namespace Com.AC3
         // Controls
         private void conectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            myComManager.Conexion();
-            GraphicsFeedback();
+            if (!myComManager.getConexionState())
+            {
+                myComManager.Conexion();
+                GraphicsFeedback();
+                if (myComManager.getConexionState()) { FeedbackTimer.Start(); }  
+                myComManager.setComError(false);
+            }
         }
         private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            myComManager.Conexion();
-            GraphicsFeedback();
+            if (myComManager.getConexionState())
+            {
+                myComManager.Conexion();
+                GraphicsFeedback();
+                FeedbackTimer.Stop();
+                myComManager.setComError(false);
+            }
         }
         private void btStrStp_Click(object sender, EventArgs e)
         {
@@ -108,10 +118,13 @@ namespace Com.AC3
             {
                 if(Int32.Parse(txtVelocity.Text) < 0 && 100 > Int32.Parse(txtVelocity.Text))
                 {
+                    MessageBox.Show("Please you must enter a number from 0 to 100");
+                }
+                else 
+                {
                     prbFeedback.Value = trbVelocity.Value;
                     lblFeedback.Text = trbVelocity.Value.ToString() + " %";
                 }
-                else { MessageBox.Show("Please you must enter a number from 0 to 100"); }
                 
             }
             catch(Exception ex)
