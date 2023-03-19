@@ -14,7 +14,8 @@ namespace Com.AC3
 {
     public partial class Form1 : Form
     {
-        // Objects
+        // Objects-		Miembros estáticos		
+
         static ComManager myComManager = new ComManager();
 
         // Constructor
@@ -144,6 +145,10 @@ namespace Com.AC3
             {
                 myComManager.FullCom("INF", "EST", "", "");
                 GraphicsFeedback();
+                if (myComManager.getComError())
+                {
+                    FeedbackTimer.Stop();
+                }
                 myComManager.setComError(false);
             }
         }
