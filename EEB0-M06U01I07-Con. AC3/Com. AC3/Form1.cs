@@ -148,6 +148,7 @@ namespace Com.AC3
                 if (myComManager.getComError())
                 {
                     FeedbackTimer.Stop();
+                    MessageBox.Show("Feedback response is not working");
                 }
                 myComManager.setComError(false);
             }
