@@ -31,17 +31,16 @@ namespace Com.AC3
                 a += c[i];
                 i++;
             }
-            while (c[i] != '#');
+            while (c[i] == '#');
             a = "";
-            i++;
             while (c[i] != '$')
             {
                 a += c[i];
                 i++;
             }
             command = a;
-            a = "";
             i++;
+            a = "";
             while (c[i] != '&')
             {
                 a += c[i];
@@ -65,8 +64,6 @@ namespace Com.AC3
             }
             arg3 = a;
             a = "";
-            i++;
-
         }
 
         // Order creator 

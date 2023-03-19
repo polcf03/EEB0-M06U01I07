@@ -170,7 +170,7 @@
             // 
             // FeedbackTimer
             // 
-            this.FeedbackTimer.Interval = 500;
+            this.FeedbackTimer.Interval = 2000;
             this.FeedbackTimer.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // btVel
@@ -207,14 +207,14 @@
             // conectToolStripMenuItem
             // 
             this.conectToolStripMenuItem.Name = "conectToolStripMenuItem";
-            this.conectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.conectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.conectToolStripMenuItem.Text = "Connect";
             this.conectToolStripMenuItem.Click += new System.EventHandler(this.conectToolStripMenuItem_Click);
             // 
             // disconnectToolStripMenuItem
             // 
             this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
-            this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.disconnectToolStripMenuItem.Text = "Disconnect";
             this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
             // 

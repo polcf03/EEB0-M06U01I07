@@ -21,7 +21,6 @@ namespace Com.AC3
         // Class varables
         private bool ConexionState, ComError, firstCom;
         private string Port;
-        
 
         // Constructors
         public ComManager()
@@ -51,13 +50,13 @@ namespace Com.AC3
                             mySerial.ReadTimeout = 2000;
                             mySerial.WriteTimeout = 2000;
 
-                            mySerial.ReadTimeout = 500;
                             //Serial Conexion
                             mySerial.Open();
+                            
 
                             //Orders and feedback conexion
                             SendOrder("STM","CON","","");
-                            ReadFeedback(false);
+                            ReadFeedback();
                             if (getComError()) { mySerial.Close(); }
                             firstCom = false;
                         }
@@ -68,18 +67,20 @@ namespace Com.AC3
                 {
                     try
                     {
-                        // Serial Pârameters
+                        //Serial Pârameters
                         mySerial.PortName = Port;
                         mySerial.BaudRate = 19200;
                         mySerial.Encoding = System.Text.Encoding.Default;
                         mySerial.ReadTimeout = 2000;
                         mySerial.WriteTimeout = 2000;
 
-                        // Serial Conexion
+                        //Serial Conexion
                         mySerial.Open();
 
-                        // Orders and feedback conexion
-                        FullCom("STM", "CON", "", "");
+
+                        //Orders and feedback conexion
+                        SendOrder("STM", "CON", "", "");
+                        ReadFeedback();
                         if (getComError()) { mySerial.Close(); }
                     }
                     catch (Exception ex) { mySerial.Close(); }
@@ -96,33 +97,29 @@ namespace Com.AC3
         // Complete dialogue (Send and recieve)
         public void FullCom(string Command, string Arg1, string Arg2, string Arg3)
         {
-            SendOrder(Command, Arg1, Arg2, Arg3); 
-            ReadFeedback(true);
+            SendOrder(Command, Arg1, Arg2, Arg3);
+            ReadFeedback();
         }
 
         // Read and Upload Feedback
-        private void ReadFeedback(bool protect)
+        private void ReadFeedback()
         {
-            if (protect)
+            try
             {
-                try
-                {
-                    string str = mySerial.ReadLine();
-                    if (str == null && str == "")
-                    {
-                        ComError = true;
-                    }
-                    else
-                    {
-                        myFrameManager.Frame(str);
-                        UploadData(myFrameManager.getCommand(), myFrameManager.getArg1(), myFrameManager.getArg2(), myFrameManager.getArg3());
-                    }
-                }
-                catch (Exception ex)
+                string str = mySerial.ReadLine();
+                if (str == null && str == "")
                 {
                     ComError = true;
-                    mySerial.Close();
                 }
+                else
+                {
+                    myFrameManager.Frame(str);
+                    UploadData(myFrameManager.getCommand(), myFrameManager.getArg1(), myFrameManager.getArg2(), myFrameManager.getArg3());
+                }
+            }
+            catch (Exception ex)
+            {
+                ComError = true;
             }
         }
         // Upload Motor and conexion state data
@@ -135,9 +132,11 @@ namespace Com.AC3
                     {
                         case "CONO":
                             ConexionState = true;
+                            ComError = false;
                             break;
                         case "DISO":
                             ConexionState = false;
+                            ComError = true;
                             break;
                         default:
                             ConexionState = false;
@@ -261,7 +260,6 @@ namespace Com.AC3
                     break;
             }
         }
-        
 
         // Send Order
         private void SendOrder(string Command, string Arg1, string Arg2, string Arg3)
