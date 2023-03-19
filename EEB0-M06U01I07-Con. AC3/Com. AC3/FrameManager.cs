@@ -19,17 +19,6 @@ namespace Com.AC3
             arg3 = "";
             order = "";
         }
-        public FrameManager(bool Connect)
-        {
-            command = "";
-            arg1 = "";
-            arg2 = "";
-            arg3 = "";
-            if (Connect)
-            {
-                order = "#STM$CON&%#";
-            }
-        }
 
         // Frame spliter
         public void Frame(string str)
