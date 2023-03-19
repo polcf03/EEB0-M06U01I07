@@ -124,144 +124,144 @@ namespace Com.AC3
                     mySerial.Close();
                 }
             }
-
-            // Upload Motor and conexion state data
-            void UploadData(string Command, string Arg1, string Arg2, string Arg3)
+        }
+        // Upload Motor and conexion state data
+        private void UploadData(string Command, string Arg1, string Arg2, string Arg3)
+        {
+            switch (Command)
             {
-                switch (Command)
-                {
-                    case "STM":
-                        switch (Arg1)
-                        {
-                            case "CONO":
-                                ConexionState = true;
-                                break;
-                            case "DISO":
-                                ConexionState = false;
-                                break;
-                            default:
-                                ConexionState = false;
-                                ComError = true;
-                                break;
-                        }
-                        break;
-                    case "CON":
-                        switch (Arg1)
-                        {
-                            case "MOV":
-                                switch (Arg2)
-                                {
-                                    case "ON":
-                                        if (Arg3 == "OK")
-                                        {
-                                            myMotor.updateOn();
-                                        }
-                                        else if (Arg3 == "WR")
-                                        {
-                                            myMotor.resetNewOn();
-                                            ComError = true;
-                                        }
-                                        else
-                                        {
-                                            myMotor.resetNewOn();
-                                            ComError = true;
-                                        }
-                                        break;
-                                    case "OFF":
-                                        if (Arg3 == "OK")
-                                        {
-                                            myMotor.updateOn();
-                                        }
-                                        else if (Arg3 == "WR")
-                                        {
-                                            myMotor.resetNewOn();
-                                            ComError = true;
-                                        }
-                                        else
-                                        {
-                                            myMotor.resetNewOn();
-                                            ComError = true;
-                                        }
-                                        break;
-                                    default:
+                case "STM":
+                    switch (Arg1)
+                    {
+                        case "CONO":
+                            ConexionState = true;
+                            break;
+                        case "DISO":
+                            ConexionState = false;
+                            break;
+                        default:
+                            ConexionState = false;
+                            ComError = true;
+                            break;
+                    }
+                    break;
+                case "CON":
+                    switch (Arg1)
+                    {
+                        case "MOV":
+                            switch (Arg2)
+                            {
+                                case "ON":
+                                    if (Arg3 == "OK")
+                                    {
+                                        myMotor.updateOn();
+                                    }
+                                    else if (Arg3 == "WR")
+                                    {
                                         myMotor.resetNewOn();
                                         ComError = true;
-                                        break;
-                                }
-                                break;
-                            case "VEL":
-                                if (Arg2 == "OK")
-                                {
-                                    myMotor.updateVelocity();
-                                }
-                                else if (Arg2 == "WR")
-                                {
-                                    myMotor.resetNewVelocity();
+                                    }
+                                    else
+                                    {
+                                        myMotor.resetNewOn();
+                                        ComError = true;
+                                    }
+                                    break;
+                                case "OFF":
+                                    if (Arg3 == "OK")
+                                    {
+                                        myMotor.updateOn();
+                                    }
+                                    else if (Arg3 == "WR")
+                                    {
+                                        myMotor.resetNewOn();
+                                        ComError = true;
+                                    }
+                                    else
+                                    {
+                                        myMotor.resetNewOn();
+                                        ComError = true;
+                                    }
+                                    break;
+                                default:
+                                    myMotor.resetNewOn();
                                     ComError = true;
-                                }
-                                else
-                                {
-                                    myMotor.resetNewVelocity();
-                                    ComError = true;
-                                }
-                                break;
-                            case "DIR":
-                                if (Arg2 == "OK")
-                                {
-                                    myMotor.updateDirection();
-                                }
-                                else if (Arg2 == "WR")
-                                {
-                                    myMotor.resetNewDirection();
-                                    ComError = true;
-                                }
-                                else
-                                {
-                                    myMotor.resetNewDirection();
-                                    ComError = true;
-                                }
-                                break;
-                            default: ComError = true; break;
-                        }
-                        break;
-                    case "INF":
-                        try
-                        {
-                            if (Arg1 == "ON")
-                            {
-                                myMotor.setCurrentOn(true);
+                                    break;
                             }
-                            else if (Arg1 == "OFF")
+                            break;
+                        case "VEL":
+                            if (Arg2 == "OK")
                             {
-                                myMotor.setCurrentOn(false);
+                                myMotor.updateVelocity();
                             }
-                            else { ComError = true; }
-
-                            if (Arg2 != "RIG" && Arg2 != "LFT")
+                            else if (Arg2 == "WR")
                             {
+                                myMotor.resetNewVelocity();
                                 ComError = true;
                             }
-                            else { myMotor.setCurrentDirection(Arg2); }
-
-                            int a;
-                            a = Int32.Parse(Arg3);
-                            if (0 <= a && a >= 100)
+                            else
                             {
-                                myMotor.setCurrentVelocity(a);
+                                myMotor.resetNewVelocity();
+                                ComError = true;
                             }
-                            else { ComError = true; }
+                            break;
+                        case "DIR":
+                            if (Arg2 == "OK")
+                            {
+                                myMotor.updateDirection();
+                            }
+                            else if (Arg2 == "WR")
+                            {
+                                myMotor.resetNewDirection();
+                                ComError = true;
+                            }
+                            else
+                            {
+                                myMotor.resetNewDirection();
+                                ComError = true;
+                            }
+                            break;
+                        default: ComError = true; break;
+                    }
+                    break;
+                case "INF":
+                    try
+                    {
+                        if (Arg1 == "ON")
+                        {
+                            myMotor.setCurrentOn(true);
                         }
-                        catch (Exception)
+                        else if (Arg1 == "OFF")
+                        {
+                            myMotor.setCurrentOn(false);
+                        }
+                        else { ComError = true; }
+
+                        if (Arg2 != "RIG" && Arg2 != "LFT")
                         {
                             ComError = true;
                         }
-                        break;
-                    default:
+                        else { myMotor.setCurrentDirection(Arg2); }
+
+                        int a;
+                        a = Int32.Parse(Arg3);
+                        if (0 <= a && a >= 100)
+                        {
+                            myMotor.setCurrentVelocity(a);
+                        }
+                        else { ComError = true; }
+                    }
+                    catch (Exception)
+                    {
                         ComError = true;
-                        break;
-                }
+                    }
+                    break;
+                default:
+                    ComError = true;
+                    break;
             }
         }
+        
 
         // Send Order
         private void SendOrder(string Command, string Arg1, string Arg2, string Arg3)
