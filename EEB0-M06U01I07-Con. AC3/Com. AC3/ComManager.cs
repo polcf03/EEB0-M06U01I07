@@ -42,50 +42,40 @@ namespace Com.AC3
                 {
                     foreach (string sp in SerialPort.GetPortNames())
                     {
-                        try
-                        {
-                            //Serial Pârameters
-                            Port = sp;
-                            mySerial.PortName = Port;
-                            mySerial.BaudRate = 19200;
-                            mySerial.Encoding = System.Text.Encoding.Default;
-                            mySerial.ReadTimeout = 2000;
-                            mySerial.WriteTimeout = 2000;
 
-                            //Serial Conexion
-                            mySerial.Open();
+                        //Serial Pârameters
+                        Port = sp;
+                        mySerial.PortName = Port;
+                        mySerial.BaudRate = 19200;
+                        mySerial.Encoding = System.Text.Encoding.Default;
+                        mySerial.ReadTimeout = 500;
+
+                        //Serial Conexion
+                        mySerial.Open();
                             
 
-                            //Orders and feedback conexion
-                            SendOrder("STM","CON","","");
-                            ReadFeedback();
-                            if (getComError()) { mySerial.Close(); }
-                            firstCom = false;
-                        }
-                        catch (Exception ex) { mySerial.Close(); }
+                        //Orders and feedback conexion
+                        FullCom("STM","CON","","");
+                        if (getComError()) { mySerial.Close(); }
+                        firstCom = false;
                     }
                 }
                 else
                 {
-                    try
-                    {
-                        //Serial Pârameters
-                        mySerial.PortName = Port;
-                        mySerial.BaudRate = 19200;
-                        mySerial.Encoding = System.Text.Encoding.Default;
-                        mySerial.ReadTimeout = 2000;
-                        mySerial.WriteTimeout = 2000;
 
-                        //Serial Conexion
-                        mySerial.Open();
+                    //Serial Pârameters
+                    mySerial.PortName = Port;
+                    mySerial.BaudRate = 19200;
+                    mySerial.Encoding = System.Text.Encoding.Default;
+                    mySerial.ReadTimeout = 500;
+
+                    //Serial Conexion
+                    mySerial.Open();
 
 
-                        //Orders and feedback conexion
-                        SendOrder("STM", "CON", "", "");
-                        ReadFeedback();
-                        if (getComError()) { mySerial.Close(); }
-                    }
-                    catch (Exception ex) { mySerial.Close(); }
+                    //Orders and feedback conexion
+                    FullCom("STM", "CON", "", "");
+                    if (getComError()) { mySerial.Close(); }
                 }
             }
             else
@@ -101,6 +91,23 @@ namespace Com.AC3
         {
             SendOrder(Command, Arg1, Arg2, Arg3);
             ReadFeedback();
+        }
+        private void SendOrder(string Command, string Arg1, string Arg2, string Arg3)
+        {
+            try
+            {
+                string str;
+                str = myFrameManager.Order(Command, Arg1, Arg2, Arg3);
+                Data += str + "r/n/";
+                mySerial.Write(str);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                mySerial.Close();
+                ConexionState = false;
+                ComError = true;
+            }
         }
 
         // Read and Upload Feedback
@@ -126,7 +133,6 @@ namespace Com.AC3
                 ComError = true;
             }
         }
-        // Upload Motor and conexion state data
         private void UploadData(string Command, string Arg1, string Arg2, string Arg3)
         {
             switch (Command)
@@ -248,7 +254,7 @@ namespace Com.AC3
 
                         int a;
                         a = Int32.Parse(Arg3);
-                        if (0 <= a && a >= 100)
+                        if (0 <= a && a <= 100)
                         {
                             myMotor.setCurrentVelocity(a);
                         }
@@ -265,24 +271,6 @@ namespace Com.AC3
             }
         }
 
-        // Send Order
-        private void SendOrder(string Command, string Arg1, string Arg2, string Arg3)
-        {
-            try
-            {
-                string str;
-                str = myFrameManager.Order(Command, Arg1, Arg2, Arg3);
-                Data += str + "r/n/";
-                mySerial.Write(str);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-                mySerial.Close();
-                ConexionState = false;
-                ComError = true;
-            }
-        }
 
         // Modifier
         public void setComError(bool state) { ComError = state; }

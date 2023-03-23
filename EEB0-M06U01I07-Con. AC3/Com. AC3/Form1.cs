@@ -38,6 +38,8 @@ namespace Com.AC3
                 myComManager.Conexion();
                 myComManager.setComError(false);
                 GraphicsFeedback();
+                
+                
                 if (myComManager.getConexionState()) { FeedbackTimer.Start(); }  
             }
         }
@@ -112,27 +114,6 @@ namespace Com.AC3
             }
         }
 
-        // Velocity bar mesure
-        private void txtVelocity_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if(Int32.Parse(txtVelocity.Text) < 0 && 100 < Int32.Parse(txtVelocity.Text))
-                {
-                    MessageBox.Show("Please you must enter a number from 0 to 100");
-                }
-                else 
-                {
-                    prbFeedback.Value = trbVelocity.Value;
-                    lblFeedback.Text = trbVelocity.Value.ToString() + " %";
-                }
-                
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show("Please you must enter a number from 0 to 100");
-            }
-        }
         private void trbVelocity_ValueChanged(object sender, EventArgs e)
         {
             txtVelocity.Text = trbVelocity.Value.ToString();
@@ -194,7 +175,8 @@ namespace Com.AC3
                 }
                 try
                 {
-                    txtVelocity.Text = myComManager.getMotorVelocity().ToString();
+                    prbFeedback.Value = myComManager.getMotorVelocity();
+                    lblFeedback.Text = myComManager.getMotorVelocity().ToString();
                 }
                 catch(Exception ex) { };
             }
@@ -202,7 +184,10 @@ namespace Com.AC3
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            myComManager.Conexion();
+            if (myComManager.getConexionState())
+            {
+                myComManager.Conexion();
+            }
         }
     }
 }
