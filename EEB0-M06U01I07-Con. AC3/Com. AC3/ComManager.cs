@@ -297,7 +297,7 @@ namespace Com.AC3
 
         public bool getMotorOn() { return myMotor.getnCurrentOn(); }
         public string getMotorDirection() { return myMotor.getCurrentDirection(); }
-        public int getMotorVelociity() { return myMotor.getCurrentVelocity(); }
+        public int getMotorVelocity() { return myMotor.getCurrentVelocity(); }
 
 
     }

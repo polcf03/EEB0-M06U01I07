@@ -36,9 +36,9 @@ namespace Com.AC3
             if (!myComManager.getConexionState())
             {
                 myComManager.Conexion();
+                myComManager.setComError(false);
                 GraphicsFeedback();
                 if (myComManager.getConexionState()) { FeedbackTimer.Start(); }  
-                myComManager.setComError(false);
             }
         }
         private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -117,7 +117,7 @@ namespace Com.AC3
         {
             try
             {
-                if(Int32.Parse(txtVelocity.Text) < 0 && 100 > Int32.Parse(txtVelocity.Text))
+                if(Int32.Parse(txtVelocity.Text) < 0 && 100 < Int32.Parse(txtVelocity.Text))
                 {
                     MessageBox.Show("Please you must enter a number from 0 to 100");
                 }
@@ -159,40 +159,50 @@ namespace Com.AC3
             {
                 if(myComManager.getConexionState())
                 {
-                    btRight.Enabled = true;
-                    btLeft.Enabled = true;
-                    btStrStp.Enabled = true;
-                    btVel.Enabled = true;
-                    trbVelocity.Enabled = true;
-                    txtVelocity.Enabled = true;
+                    btStrStp.Enabled = true;    
                 }
                 else
                 {
-                    btRight.Enabled = false;
-                    btLeft.Enabled = false;
                     btStrStp.Enabled = false;
-                    btVel.Enabled = false;
-                    trbVelocity.Enabled = false;
-                    txtVelocity.Enabled = false;
                 }
 
                 if(!myComManager.getMotorOn())
                 {
                     btStrStp.Text = "ON";
+                    btRight.Enabled = false;
+                    btLeft.Enabled = false;
+                    btVel.Enabled = false;
+                    trbVelocity.Enabled = false;
+                    txtVelocity.Enabled = false;
                 }
-                else { btStrStp.Text = "OFF"; }
+                else 
+                { 
+                    btStrStp.Text = "OFF";
+                    btRight.Enabled = true;
+                    btLeft.Enabled = true;
+                    btVel.Enabled = true;
+                    trbVelocity.Enabled = true;
+                    txtVelocity.Enabled = true;
 
-                if(myComManager.getMotorDirection() == "RIG") { btRight.Enabled = false; btLeft.Enabled = true;}
-                else if(myComManager.getMotorDirection() == "LFT"){ btRight.Enabled = true; btLeft.Enabled = false;}
-                else { btRight.Enabled = false; btLeft.Enabled=false;}
+                }
+                if (myComManager.getMotorOn())
+                {
+                    if (myComManager.getMotorDirection() == "RIG") { btRight.Enabled = false; btLeft.Enabled = true; }
+                    else if (myComManager.getMotorDirection() == "LFT") { btRight.Enabled = true; btLeft.Enabled = false; }
+                    else { btRight.Enabled = false; btLeft.Enabled = false; }
 
+                }
                 try
                 {
-                    txtVelocity.Text = myComManager.getMotorVelociity().ToString();
+                    txtVelocity.Text = myComManager.getMotorVelocity().ToString();
                 }
                 catch(Exception ex) { };
             }
         }
 
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            myComManager.Conexion();
+        }
     }
 }
