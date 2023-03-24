@@ -101,7 +101,6 @@
             this.txtVelocity.Location = new System.Drawing.Point(12, 210);
             this.txtVelocity.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtVelocity.Name = "txtVelocity";
-            this.txtVelocity.ReadOnly = true;
             this.txtVelocity.Size = new System.Drawing.Size(164, 22);
             this.txtVelocity.TabIndex = 6;
             this.txtVelocity.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;

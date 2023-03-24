@@ -144,6 +144,7 @@ namespace Com.AC3
                             ComError = false;
                             break;
                         case "DISO":
+
                             ConexionState = false;
                             ComError = false;
                             break;

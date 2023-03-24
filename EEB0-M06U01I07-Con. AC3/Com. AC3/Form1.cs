@@ -110,6 +110,23 @@ namespace Com.AC3
 
                 myComManager.FullCom("CON", "VEL", txtVelocity.Text, "");
                 GraphicsFeedback();
+                try
+                {
+                    if (0 <= Int32.Parse(txtVelocity.Text) && Int32.Parse(txtVelocity.Text) <= Int32.Parse(txtVelocity.Text))
+                    {
+                        trbVelocity.Value = Int32.Parse(txtVelocity.Text);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Insertar numero de 0 a 100");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Insertar numero de 0 a 100");
+                }
+                    
+                
                 myComManager.setComError(false);
             }
         }
