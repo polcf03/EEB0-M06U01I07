@@ -81,7 +81,6 @@ namespace Com.AC3
             else
             {
                 FullCom("STM", "DIS", "", "");
-                ConexionState = false;
                 mySerial.Close();
             }
         }
@@ -146,7 +145,7 @@ namespace Com.AC3
                             break;
                         case "DISO":
                             ConexionState = false;
-                            ComError = true;
+                            ComError = false;
                             break;
                         default:
                             ConexionState = false;

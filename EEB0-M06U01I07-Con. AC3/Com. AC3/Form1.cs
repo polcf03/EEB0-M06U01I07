@@ -48,8 +48,8 @@ namespace Com.AC3
             if (myComManager.getConexionState())
             {
                 myComManager.Conexion();
-                GraphicsFeedback();
                 FeedbackTimer.Stop();
+                GraphicsFeedback();
                 myComManager.setComError(false);
             }
         }
@@ -145,6 +145,11 @@ namespace Com.AC3
                 else
                 {
                     btStrStp.Enabled = false;
+                    btRight.Enabled = false;
+                    btLeft.Enabled = false;
+                    btVel.Enabled = false;
+                    trbVelocity.Enabled = false;
+                    txtVelocity.Enabled = false;
                 }
 
                 if(!myComManager.getMotorOn())
