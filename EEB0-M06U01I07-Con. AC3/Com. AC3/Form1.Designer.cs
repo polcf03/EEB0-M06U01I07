@@ -130,6 +130,7 @@
             // 
             this.prbFeedback.Location = new System.Drawing.Point(12, 308);
             this.prbFeedback.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.prbFeedback.MarqueeAnimationSpeed = 0;
             this.prbFeedback.Name = "prbFeedback";
             this.prbFeedback.Size = new System.Drawing.Size(164, 23);
             this.prbFeedback.TabIndex = 9;
@@ -269,7 +270,6 @@
         private System.Windows.Forms.TextBox txtVelocity;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ProgressBar prbFeedback;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblFeedback;
         private System.Windows.Forms.TextBox textBox1;
@@ -281,6 +281,7 @@
         private System.Windows.Forms.ToolStripMenuItem disconnectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem notepadToolStripMenuItem;
+        public System.Windows.Forms.ProgressBar prbFeedback;
     }
 }
 

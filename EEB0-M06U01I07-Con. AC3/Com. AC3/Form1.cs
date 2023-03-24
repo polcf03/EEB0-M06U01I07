@@ -27,7 +27,7 @@ namespace Com.AC3
             btStrStp.Enabled = false;
             btVel.Enabled = false;
             trbVelocity.Enabled= false;
-            txtVelocity.Enabled = false;    
+            txtVelocity.Enabled = false;
         }
 
         // Controls
@@ -38,7 +38,6 @@ namespace Com.AC3
                 myComManager.Conexion();
                 myComManager.setComError(false);
                 GraphicsFeedback();
-                
                 
                 if (myComManager.getConexionState()) { FeedbackTimer.Start(); }  
             }
