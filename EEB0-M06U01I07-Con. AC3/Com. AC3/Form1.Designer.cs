@@ -162,7 +162,8 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(304, 286);
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox1.Size = new System.Drawing.Size(424, 286);
             this.textBox1.TabIndex = 10;
             // 
             // FeedbackTimer
@@ -189,7 +190,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(581, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(695, 28);
             this.menuStrip1.TabIndex = 12;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -227,14 +228,15 @@
             // notepadToolStripMenuItem
             // 
             this.notepadToolStripMenuItem.Name = "notepadToolStripMenuItem";
-            this.notepadToolStripMenuItem.Size = new System.Drawing.Size(157, 24);
-            this.notepadToolStripMenuItem.Text = "Notepad.txt";
+            this.notepadToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.notepadToolStripMenuItem.Text = "Txt file";
+            this.notepadToolStripMenuItem.Click += new System.EventHandler(this.notepadToolStripMenuItem_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(581, 407);
+            this.ClientSize = new System.Drawing.Size(695, 407);
             this.Controls.Add(this.btVel);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.prbFeedback);

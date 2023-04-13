@@ -18,6 +18,10 @@ namespace Com.AC3
         static Motor myMotor = new Motor();
         static FrameManager myFrameManager = new FrameManager();
 
+        // Events
+        public EventHandler<DataEventArgs> TransferData;
+        
+
         // Class varables
         private bool ConexionState, ComError, firstCom;
         private string Port;
@@ -97,7 +101,7 @@ namespace Com.AC3
             {
                 string str;
                 str = myFrameManager.Order(Command, Arg1, Arg2, Arg3);
-                Data += str + "r/n/";
+                DataEvent(str, true, false);
                 mySerial.Write(str);
             }
             catch (Exception ex)
@@ -115,7 +119,7 @@ namespace Com.AC3
             try
             {
                 string str = mySerial.ReadLine();
-                Data += str + "r/n/";
+                DataEvent(str, false, true);
                 if (str == null && str == "")
                 {
                     ComError = true;
@@ -287,6 +291,18 @@ namespace Com.AC3
         public string getMotorDirection() { return myMotor.getCurrentDirection(); }
         public int getMotorVelocity() { return myMotor.getCurrentVelocity(); }
 
-
+        // Event
+        public void DataEvent(string data, bool sended, bool received)
+        {
+            DataEventArgs args = new DataEventArgs();
+            args.Data = data;
+            args.Sended = sended;
+            args.Received = received;
+            EventHandler<DataEventArgs> handler = TransferData;
+            if (handler != null)
+            {
+                handler(this, args);
+            }
+        }
     }
 }

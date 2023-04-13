@@ -14,9 +14,12 @@ namespace Com.AC3
 {
     public partial class Form1 : Form
     {
-        // Objects-		Miembros estáticos		
-
+        // Objects
         static ComManager myComManager = new ComManager();
+        static Exporter myExporter = new Exporter();
+
+        // Class variables
+        private string txtLatetly, txtLatetly2;
 
         // Constructor
         public Form1()
@@ -28,6 +31,10 @@ namespace Com.AC3
             btVel.Enabled = false;
             trbVelocity.Enabled= false;
             txtVelocity.Enabled = false;
+
+            myComManager.TransferData += SerialDisplay;
+            txtLatetly = "";
+            txtLatetly2 = "";
         }
 
         // Controls
@@ -209,6 +216,31 @@ namespace Com.AC3
             {
                 myComManager.Conexion();
             }
+        }
+
+       
+        private void SerialDisplay(object sender, DataEventArgs e)
+        {
+            string txt;
+            txt = e.Data;
+            myExporter.addData(e.Data, e.Sended, e.Received);
+            if (txt != "#INF$EST&%#")
+            {
+                if (e.Sended && !e.Received)
+                {
+                    textBox1.Text = DateTime.Now.ToString() + "  -  Pc to Ard:  " + txt + "\r\n" + textBox1.Text;
+                }
+                else if (e.Received && !e.Sended)
+                {
+                    textBox1.Text = DateTime.Now.ToString() + "  -  Ard to Pc:  " + txt + "\r\n" + textBox1.Text;
+                }
+                else { } 
+            }         
+        }
+
+        private void notepadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            myExporter.ShowDialog();
         }
     }
 }
