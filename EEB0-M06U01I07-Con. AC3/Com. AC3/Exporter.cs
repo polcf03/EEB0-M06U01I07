@@ -11,53 +11,53 @@ using System.IO;
 namespace Com.AC3
 {
 
-        public partial class Exporter : Form
+    public partial class Exporter : Form
+    {
+        private string data;
+
+        public Exporter()
         {
-            private string data;
+            data = "";
+        }
 
-            public Exporter()
+        private string getData()
+        {
+            return data;
+
+        }
+        private void setData(string txt)
+        {
+            data = txt;
+        }
+
+        public void addData(string txt, bool sended, bool received)
+        {
+            if (sended && !received)
             {
-                data = "";
+                data += "/" + DateTime.Now.ToString() + "," + "Pc to Ard" + "," + txt;
             }
-
-            private string getData()
+            else if (!received && sended)
             {
-                return data;
-
+                data += "/" + DateTime.Now.ToString() + "," + "Ard to Pc" + "," + txt;
             }
-            private void setData(string txt)
+            else
             {
-                data = txt;
-            }
 
-            public void addData(string txt, bool sended, bool received)
-            {
-                if (sended && !received)
-                {
-                    data += "/" + DateTime.Now.ToString() + "," + "Pc to Ard" + "," + txt;
-                }
-                else if (!received && sended)
-                {
-                    data += "/" + DateTime.Now.ToString() + "," + "Ard to Pc" + "," + txt;
-                }
-                else
-                {
-
-                }
-            }
-            public void export(string txt)
-            {
-                FileStream fs;
-                fs = new FileStream(txt, FileMode.CreateNew);
-                StreamWriter writetext = new StreamWriter(fs);
-                writetext.WriteLine(data);
-            }
-
-            private void button1_Click(object sender, EventArgs e)
-            {
-                export(textBox1.Text);
-                this.Close();
             }
         }
+        public void export(string txt)
+        {
+            FileStream fs;
+            fs = new FileStream(txt, FileMode.CreateNew);
+            StreamWriter writetext = new StreamWriter(fs);
+            writetext.WriteLine(data);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            export(textBox1.Text);
+            this.Close();
+        }
     }
+    
 }

@@ -18,9 +18,6 @@ namespace Com.AC3
         static ComManager myComManager = new ComManager();
         static Exporter myExporter = new Exporter();
 
-        // Class variables
-        private string txtLatetly, txtLatetly2;
-
         // Constructor
         public Form1()
         {
@@ -29,12 +26,10 @@ namespace Com.AC3
             btLeft.Enabled = false;
             btStrStp.Enabled = false;
             btVel.Enabled = false;
-            trbVelocity.Enabled= false;
-            txtVelocity.Enabled = false;
+            trbVelocity.Enabled= true;
+            txtVelocity.Enabled = true;
 
             myComManager.TransferData += SerialDisplay;
-            txtLatetly = "";
-            txtLatetly2 = "";
         }
 
         // Controls
@@ -118,18 +113,18 @@ namespace Com.AC3
                 GraphicsFeedback();
                 try
                 {
-                    if (0 <= Int32.Parse(txtVelocity.Text) && Int32.Parse(txtVelocity.Text) <= Int32.Parse(txtVelocity.Text))
+                    if (0 <= float.Parse(txtVelocity.Text) && float.Parse(txtVelocity.Text) <= float.Parse(txtVelocity.Text))
                     {
                         trbVelocity.Value = Int32.Parse(txtVelocity.Text);
                     }
                     else
                     {
-                        MessageBox.Show("Insertar numero de 0 a 100");
+                        MessageBox.Show("Insertar numero de 0 a 50");
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Insertar numero de 0 a 100");
+                    MessageBox.Show("Insertar numero de 0 a 50");
                 }
                     
                 
@@ -139,7 +134,9 @@ namespace Com.AC3
 
         private void trbVelocity_ValueChanged(object sender, EventArgs e)
         {
-            txtVelocity.Text = trbVelocity.Value.ToString();
+            float a;
+            a = trbVelocity.Value;
+            txtVelocity.Text = a.ToString() + ".0";
         }
 
         // Graphic reset by Feedback
