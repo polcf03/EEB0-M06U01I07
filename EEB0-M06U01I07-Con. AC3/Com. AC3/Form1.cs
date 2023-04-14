@@ -26,8 +26,8 @@ namespace Com.AC3
             btLeft.Enabled = false;
             btStrStp.Enabled = false;
             btVel.Enabled = false;
-            trbVelocity.Enabled= true;
-            txtVelocity.Enabled = true;
+            trbVelocity.Enabled= false;
+            txtVelocity.Enabled = false;
 
             myComManager.TransferData += SerialDisplay;
         }

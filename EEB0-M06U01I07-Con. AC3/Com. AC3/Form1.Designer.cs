@@ -57,7 +57,7 @@
             this.btRight.Location = new System.Drawing.Point(71, 92);
             this.btRight.Margin = new System.Windows.Forms.Padding(2);
             this.btRight.Name = "btRight";
-            this.btRight.Size = new System.Drawing.Size(63, 61);
+            this.btRight.Size = new System.Drawing.Size(62, 61);
             this.btRight.TabIndex = 0;
             this.btRight.Text = "Right";
             this.btRight.UseVisualStyleBackColor = true;
@@ -134,6 +134,7 @@
             this.prbFeedback.Location = new System.Drawing.Point(9, 243);
             this.prbFeedback.Margin = new System.Windows.Forms.Padding(2);
             this.prbFeedback.MarqueeAnimationSpeed = 0;
+            this.prbFeedback.Maximum = 3444;
             this.prbFeedback.Name = "prbFeedback";
             this.prbFeedback.Size = new System.Drawing.Size(123, 19);
             this.prbFeedback.TabIndex = 9;
@@ -141,7 +142,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(40, 227);
+            this.label3.Location = new System.Drawing.Point(26, 227);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 13);
@@ -153,12 +154,12 @@
             // 
             this.lblFeedback.AutoSize = true;
             this.lblFeedback.BackColor = System.Drawing.Color.Transparent;
-            this.lblFeedback.Location = new System.Drawing.Point(100, 227);
+            this.lblFeedback.Location = new System.Drawing.Point(88, 227);
             this.lblFeedback.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFeedback.Name = "lblFeedback";
-            this.lblFeedback.Size = new System.Drawing.Size(30, 13);
+            this.lblFeedback.Size = new System.Drawing.Size(39, 13);
             this.lblFeedback.TabIndex = 8;
-            this.lblFeedback.Text = "10 %";
+            this.lblFeedback.Text = "10 rpm";
             // 
             // textBox1
             // 
@@ -257,7 +258,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Control Motor AC3";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.trbVelocity)).EndInit();
             this.menuStrip1.ResumeLayout(false);
